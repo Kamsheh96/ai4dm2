@@ -1,0 +1,26 @@
+Workstream 4: Community Tooling & Infrastructure
+
+Objective:
+To develop and archive open-source, AI-accessible tools and data management artifacts that can be ingested and leveraged by the wider community of both human and AI practitioners, fostering a more interconnected and automated ecosystem.
+
+Core Concept:
+This workstream is about building the foundational, shared infrastructure for an AI-native data management future. Just as developers rely on public APIs and open-source libraries, the next generation of AI agents will require a rich ecosystem of callable tools to perform specialized tasks. This workstream aims to create the initial building blocks of that ecosystem, providing practical utilities that both humans and AI agents can use to accelerate their work.
+
+Key Research Questions:
+
+Utility & Value
+- What are the most critical, high-frequency "utility" functions in data management that would provide the most value as a callable API (e.g., data classification, data profiling)?
+- How can we measure the adoption and impact of these tools within the broader data management community?
+
+Design & Accessibility:
+- What makes an API "AI-friendly"? What are the optimal design principles for APIs that will be primarily consumed by other AI agents?
+- What standards and documentation formats are required to make these tools easily discoverable and usable by both humans and machines?
+
+Community & Governance:
+- What is the most effective governance model for managing and maintaining these open-source tools to ensure their quality and reliability over time?
+- How can we foster a community of contributors to expand the library of available tools and adapt them to new challenges?
+
+Expected Outcomes:
+- A public repository (e.g., on GitHub) for housing open-source data management tools.
+- A functional, well-documented proof-of-concept API for a high-value utility, such as a data classification tool.
+- A set of contribution guidelines and a proposed governance model for managing the open-source community project.

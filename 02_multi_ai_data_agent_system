@@ -1,0 +1,30 @@
+Workstream 2: Multi-Agent Systems (MAS)
+
+Objective:
+To architect and simulate a virtual data management team composed of multiple, collaborative AI agents, designed to handle complex, end-to-end governance workflows and explore the feasibility of a semi-autonomous data management function.
+
+Core Concept:
+This workstream tackles a more visionary challenge: moving from single AI agents to an integrated, collaborative system. It explores whether a team of specialised AI agents can work together to manage a complex data process. This research is crucial for understanding the future organisational structure of data teams and the evolving role of the AI-enabled data professional as an orchestrator rather than a mere doer.
+
+Key Research Questions:
+
+System Architecture & Collaboration
+- What is the most effective collaboration framework for a multi-agent data team? 
+- Should it be hierarchical (e.g., a "Manager" agent delegating to specialists) or a decentralized, consensus-based "swarm"?
+- How do agents effectively pass complex context and artifacts between each other without information loss?
+- What are the most effective protocols for agents to resolve conflicts or handle interdependent tasks?
+
+Governance & Accountability
+- How can we design an auditable and transparent decision-making process within a multi-agent system?
+- What are the primary failure modes for a collaborative AI system in a data management context, and what are the strategies for mitigation and human oversight?
+- Who is accountable when an autonomous system makes a governance error? 
+- How do we embed ethical guardrails and clear accountability frameworks into the system's design?
+
+Organizational Impact
+- Does the existence of a MAS truly empower a single human data manager to manage an entire function, or does it create new, unforeseen complexities?
+- What new skills are required for a human to effectively manage, orchestrate, and troubleshoot a multi-agent system?
+
+Expected Outcomes:
+- A detailed architectural blueprint for a multi-agent data management system.
+- A simulated proof-of-concept demonstrating the system's ability to execute a complex workflow.
+- A whitepaper on the opportunities, risks, and organizational implications of deploying multi-agent systems for data governance.

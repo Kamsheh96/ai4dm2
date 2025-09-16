@@ -1,0 +1,33 @@
+Workstream 1: Single-Agent Systems (SAS)
+
+Objective:
+To research best practice for, design, build, and test specialised AI agents that automate or augment core, task-oriented data management functions, thereby increasing the efficiency, consistency, and strategic capacity of human data professionals in the data management discipline.
+
+Core Concept:
+This workstream addresses the most immediate opportunity for AI integration in data management. It focuses on creating "power tools" for the Data Artisan - discrete agents that can execute specific, well-defined tasks with speed and precision according to the workflows each data management specialists travel through.
+
+The goal is to give data management practitioners a break from repetitive, time-consuming work, allowing them to focus on higher-value activities like stakeholder engagement, strategic problem-framing, and quality assurance. This is the foundational layer for building a more efficient, AI-augmented data management practice.
+
+Key Research Questions:
+
+Performance & Efficacy
+- How effectively can a single agent perform specialised tasks, e.g. like data quality validation and reporting or data modeling, based on natural language business requirements?
+- What are the practical upper limits of these agents? 
+- At what point does the complexity of a task require human intervention or a multi-agent approach?
+- How do we quantitatively benchmark the performance of these agents (e.g., time saved, error reduction) against a human expert baseline?
+
+Architecture & Design
+- What are the optimal prompting strategies and architectures (e.g., RAG vs. fine-tuning) for agents designed for discrete, analytical tasks?
+- How can these agents be designed to handle ambiguity in user requests and proactively ask clarifying questions?
+- What kind of tools do these agents need to access and are they currently available?
+
+Human-Computer Interaction (HCI)
+- What is the most effective workflow for a human-in-the-loop? 
+- Should the agent produce a final output for review, or operate as an interactive assistant?
+- How do we build trust between a human data professional and their AI agent counterpart? 
+- What transparency and explainability features are essential?
+
+Expected Outcomes:
+- A suite of functional, proof-of-concept single-purpose agents (e.g., "Data Quality Analyst," "Data Modeler").
+- A documented set of best practices and prompt libraries for interacting with these specialized agents.
+- A performance analysis report comparing agent-led execution vs. traditional manual execution for a set of standardized tasks.

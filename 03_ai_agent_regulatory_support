@@ -1,0 +1,29 @@
+Workstream 3: Regulatory & Compliance Agents (RCA)
+
+Important Caveat: this workstream will require express agreement and permission and coordination with international and national bodies to work with their content legally. Until that is sourced, this workstream will not go ahead.
+
+Objective:
+To train and fine-tune AI agents on specific international standards (DMBoK, ISO) and data protection regulations (GDPR, PDPL) to act as expert-level advisory tools for decision support, risk mitigation, and policy development.
+
+Core Concept:
+This workstream addresses the critical "Theory" and "Context" components of the T-C-E framework. Data management is heavily influenced by dense, complex regulatory and standards documents that are difficult for practitioners to interpret and apply contextually. This workstream aims to create an AI partner that can make this knowledge accessible, relevant, and actionable, reducing compliance risk and accelerating the development of sound governance policies.
+
+Key Research Questions:
+
+Accuracy & Reliability
+- How accurately can an AI agent, trained on dense legal and technical texts, provide context-aware compliance recommendations for specific business scenarios?
+- What are the most effective methods for keeping the agent's knowledge base current with evolving regulations and legal interpretations?
+- How can we design the system to transparently cite its sources and clearly articulate its confidence level to prevent user over-reliance or misunderstanding?
+
+Application & Integration
+- Can these agents be used to reliably automate the initial drafting of context-specific data policies, standards, and procedures for an organization?
+- What is the most effective user interface for such an agent? Should it be a standalone application, or integrated into existing developer and business workflows (e.g., as a Slack bot or a Jira plugin)?
+
+Scope & Ethics:
+- What are the ethical implications and potential liabilities of using an AI to provide compliance advice?
+- How do we clearly define the agent's role as a "support tool" rather than a final "decision-maker" to manage organizational risk?
+
+Expected Outcomes:
+- A curated, machine-readable knowledge base of key data management standards and regulations.
+- A functional, RAG-based proof-of-concept agent capable of answering complex compliance questions with source citations.
+- A framework document outlining the best practices, ethical considerations, and limitations for deploying AI in a regulatory advisory capacity.
