@@ -1,7 +1,7 @@
 # AI4DM
 The first open-source AI Agent and Tool R&D project for the data management discipline
 
-## AI Agents for Data Management: A Manifesto for Convergence
+## AI Agents 4 Data Management
 
 The objective is simple: 
 
