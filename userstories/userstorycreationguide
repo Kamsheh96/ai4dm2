@@ -1,0 +1,337 @@
+# User Story Creation Instructions
+
+## Overview
+This document provides instructions for creating well-structured user stories from any requirements source (BRDs, text descriptions, feature requests, etc.) following a hierarchical Epic → User Story → Task breakdown with vertical slicing principles.
+
+## Core Principles
+
+### Vertical Slicing
+- Each User Story must be a complete slice through the system (UI, logic, data)
+- Deliver end-to-end functionality that users can test and use
+- Avoid horizontal technical layers that don't provide user value
+
+### Persona-Driven Decomposition
+- Split User Stories by different user personas/roles
+- Focus on user needs rather than technical components
+- Each story should serve a specific user type
+
+### End-to-End Value
+- Every item must contribute to delivering complete user functionality
+- No story should depend on another to provide value
+- Users should be able to test and benefit from each story independently
+
+## Input Sources
+
+This framework can process requirements from:
+- Business Requirements Documents (BRDs)
+- Plain text requirements in prompts
+- Feature request descriptions
+- User feedback and requests
+- Technical specifications
+- Stakeholder conversations
+- Email threads or chat messages
+- Meeting notes or whiteboard sessions
+
+## Work Breakdown Structure
+
+### 1. Epic Level
+
+Create epics to group related user stories around major features or capabilities.
+
+**Required Fields:**
+- **ID**: Generate unique 10-character hexadecimal (e.g., `a1b2c3d4e5`)
+- **Title**: Descriptive high-level title
+- **T-Shirt Size**: XS, S, M, L, XL, or XXL based on scope
+- **Description**: Brief summary of the epic's purpose and scope
+- **User Stories**: List of all stories that fulfill this epic
+
+**Example:**
+```
+ID: a1b2c3d4e5
+Title: User Authentication System
+Size: L
+Description: Complete authentication system enabling users to securely access the platform
+```
+
+### 2. User Story Level
+
+Transform requirements into user-focused stories with clear value propositions.
+
+**Required Fields:**
+- **ID**: Generate unique 10-character hexadecimal
+- **Title**: Role-focused title from user perspective
+- **T-Shirt Size**: Prefer S or M (should fit within one sprint)
+- **Description**: Must follow format: "As a [persona], I want [feature] so that [benefit]"
+- **Acceptance Criteria**: Specific, testable conditions
+- **Scenarios**: User interaction flows
+- **Tasks**: Implementation work breakdown
+
+**Description Format:**
+```
+As a [specific user role],
+I want [specific functionality],
+So that [business value/benefit].
+```
+
+**Acceptance Criteria Structure:**
+```
+Given [precondition]
+When [action]
+Then [expected result]
+
+Additional criteria:
+- Functional requirement 1
+- Functional requirement 2
+- Performance: [specific metric]
+- Security: [specific requirement]
+- UI/UX: [specific requirement]
+```
+
+**Scenarios Format:**
+```
+Main Flow:
+1. User performs action A
+2. System responds with B
+3. User completes action C
+4. System confirms with D
+
+Alternative Flow 1:
+- If condition X at step 2, then...
+
+Alternative Flow 2:
+- If error Y occurs, then...
+```
+
+### 3. Task Level
+
+Break down user stories into concrete, actionable implementation tasks.
+
+**Required Fields:**
+- **ID**: Generate unique 10-character hexadecimal
+- **Title**: Action-oriented with verb (Implement/Create/Configure/Design/Test)
+- **T-Shirt Size**: XS, S, or M only (1-3 days maximum)
+- **Description**: Link task to specific AC or scenario
+
+**Description Format:**
+```
+[Action verb] [specific component/functionality] to enable/support [reference to specific AC or scenario from parent story]
+```
+
+**Good Task Examples:**
+- "Implement login form validation to support AC #1: email format verification"
+- "Create password strength checker to enable secure password requirement (AC #3)"
+- "Configure session timeout to support security requirement of 30-minute idle timeout"
+
+**Poor Task Examples:**
+- "Backend work" (too vague)
+- "Database setup" (not linked to user value)
+- "Fix bugs" (not specific)
+
+## Sizing Guidelines
+
+### Time Estimates
+- **XS**: Few hours
+- **S**: 1 day
+- **M**: 2-3 days
+- **L**: 1 week (only for Epics)
+- **XL**: 2 weeks (only for Epics)
+- **XXL**: 3+ weeks (only for Epics)
+
+### Sizing Rules
+1. **Tasks**: Maximum M size - if larger, break down further
+2. **User Stories**: Prefer S or M - if larger, split by persona or scenario
+3. **Epics**: Can be any size but track overall scope
+
+## Processing Different Input Types
+
+### From Formal BRDs
+1. Extract user personas from stakeholder sections
+2. Map functional requirements to user journeys
+3. Convert non-functional requirements to acceptance criteria
+4. Use document structure to identify epic boundaries
+
+### From Plain Text Requirements
+1. Identify implicit user roles (who benefits from each feature?)
+2. Group related features into potential epics
+3. Extract measurable criteria from descriptions
+4. Infer scenarios from described behaviors
+
+### From Feature Requests
+1. Identify the requester's role/persona
+2. Determine underlying need behind the request
+3. Expand single request into complete user journey
+4. Consider edge cases not mentioned
+
+### From Technical Specifications
+1. Reverse-engineer user value from technical details
+2. Identify which users interact with specified components
+3. Transform technical constraints into acceptance criteria
+4. Create user-facing scenarios from system behaviors
+
+## Transformation Process
+
+### Step 1: Analyze Input
+1. Identify all mentioned or implied user personas
+2. Extract functional capabilities described
+3. Note any constraints, performance needs, or quality requirements
+4. Recognize implicit requirements not directly stated
+
+### Step 2: Create Epics
+1. Group related functionality into high-level epics
+2. Ensure each epic delivers significant user value
+3. Size based on total scope
+4. Name epics based on business capability, not technical implementation
+
+### Step 3: Define User Stories
+1. For each epic, identify distinct user interactions
+2. Write from specific persona perspective
+3. Ensure vertical slice through system
+4. Embed non-functional requirements in acceptance criteria
+5. Fill gaps where requirements are incomplete
+
+### Step 4: Break Down into Tasks
+1. For each acceptance criterion, identify required implementation
+2. Create tasks that directly support AC fulfillment
+3. Ensure tasks are independently testable where possible
+4. Link each task back to specific AC or scenario
+
+### Step 5: Validate Completeness
+1. Verify every stated requirement is covered
+2. Check for implied requirements that should be included
+3. Ensure all non-functional requirements are embedded
+4. Confirm sizing allows for sprint planning
+5. Identify any ambiguities that need clarification
+
+## Handling Incomplete Requirements
+
+### When User Personas Are Missing
+- Infer from context (e.g., "login page" implies "registered user")
+- Consider standard roles (admin, user, guest)
+- Ask for clarification if critical
+
+### When Acceptance Criteria Are Vague
+- Add standard criteria (error handling, validation, performance)
+- Include industry standards where applicable
+- Note assumptions made
+
+### When Technical Details Are Absent
+- Focus on user-visible behavior
+- Add standard technical considerations as tasks
+- Flag areas needing technical decisions
+
+## Quality Checklist
+
+### User Story Quality
+- [ ] Follows "As a... I want... So that..." format
+- [ ] Has clear, testable acceptance criteria
+- [ ] Includes main and alternative scenarios
+- [ ] Sized appropriately (S or M)
+- [ ] Delivers end-to-end value
+- [ ] Persona-specific
+
+### Task Quality
+- [ ] Starts with action verb
+- [ ] Links to specific AC or scenario
+- [ ] Sized appropriately (XS, S, or M)
+- [ ] Contributes directly to story completion
+- [ ] Can be tested when complete
+
+### Overall Structure
+- [ ] Complete traceability from Epic to Task
+- [ ] No orphaned requirements
+- [ ] All non-functional requirements embedded
+- [ ] Vertical slices maintained
+- [ ] Clear persona focus
+- [ ] Assumptions documented
+
+## Common Pitfalls to Avoid
+
+1. **Horizontal Slicing**: Creating stories for "backend" or "frontend" only
+2. **Technical Stories**: Writing stories from developer perspective
+3. **Vague Acceptance Criteria**: Using terms like "should work properly"
+4. **Missing Non-Functionals**: Forgetting performance, security, accessibility
+5. **Large Tasks**: Creating tasks that take more than 3 days
+6. **Unclear Value**: Stories that don't clearly benefit users
+7. **Dependencies**: Stories that require other stories to provide value
+8. **Over-interpretation**: Adding requirements not implied by input
+9. **Under-specification**: Missing obvious required functionality
+
+## Output Format Example
+
+```markdown
+# Epic: User Authentication System
+**ID**: a1b2c3d4e5
+**Size**: L
+**Description**: Complete authentication system enabling secure platform access
+
+## User Story: User Login
+**ID**: f6g7h8i9j0
+**Size**: M
+**Description**: 
+As a registered user,
+I want to log in with my credentials,
+So that I can access my personalized dashboard.
+
+**Acceptance Criteria**:
+1. Given valid email and password, when submitted, then user is authenticated
+2. Given invalid credentials, when submitted, then error message is displayed
+3. Performance: Login response within 2 seconds
+4. Security: Passwords transmitted encrypted
+5. UI/UX: Form validates email format before submission
+
+**Scenarios**:
+Main Flow:
+1. User navigates to login page
+2. User enters email and password
+3. User clicks login button
+4. System validates and authenticates
+5. User redirected to dashboard
+
+Alternative Flow - Invalid Credentials:
+1. At step 4, if credentials invalid
+2. System displays error message
+3. Form fields are cleared
+4. User remains on login page
+
+### Task: Implement Login Form
+**ID**: k1l2m3n4o5
+**Size**: S
+**Description**: Create login form component with email/password fields to support main flow user interaction
+
+### Task: Add Form Validation
+**ID**: p6q7r8s9t0
+**Size**: XS
+**Description**: Implement client-side email format validation to enable AC #5 UI/UX requirement
+
+**Assumptions Made**:
+- Email used as username (inferred from context)
+- Dashboard is default post-login destination
+- Session management required (standard practice)
+```
+
+## Usage Instructions
+
+1. **With Claude Code**: Reference this file when creating user stories from any requirements source
+2. **Manual Creation**: Follow the structure and guidelines for consistent story creation
+3. **Review Process**: Use the quality checklist to validate created stories
+4. **Iteration**: Refine stories based on team feedback while maintaining principles
+
+## Quick Reference for Common Inputs
+
+### "Build a shopping cart"
+- Identify personas: Shopper, Guest, Admin
+- Create stories for: Add items, Remove items, Update quantities, Checkout
+- Include non-functionals: Performance, Security, Accessibility
+
+### "Users need to reset passwords"
+- Identify trigger: Forgotten password, Security requirement
+- Create flow: Request reset, Verify identity, Set new password
+- Consider: Email delivery, Token expiration, Security rules
+
+### "Make the system faster"
+- Identify specific operations needing improvement
+- Create stories for each performance scenario
+- Define measurable performance criteria
+- Include user impact in value statement
+
+Remember: The goal is to create user stories that deliver real value in small, testable increments that can be completed within a sprint and provide immediate benefit to users, regardless of how the requirements are initially presented.
