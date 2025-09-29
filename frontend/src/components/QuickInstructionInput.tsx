@@ -6,16 +6,19 @@ import type { FileItem } from '@domain/models';
 
 interface QuickInstructionInputProps {
   uploadedFiles: FileItem[];
+  onFilesAdded?: (files: FileItem[]) => void;
   maxLength?: number;
 }
 
 export const QuickInstructionInput: React.FC<QuickInstructionInputProps> = ({
   uploadedFiles,
+  onFilesAdded,
   maxLength = 2000
 }) => {
   const [instruction, setInstruction] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { addMessage, isProcessing, setProcessing } = useChat();
   const { selectedTools, getSelectedToolsData, openToolsModal } = useTools();
@@ -103,60 +106,84 @@ export const QuickInstructionInput: React.FC<QuickInstructionInputProps> = ({
     }
   };
 
+  const handleFileUploadClick = (): void => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const files = e.target.files;
+    if (!files || files.length === 0 || !onFilesAdded) return;
+
+    const newFiles: FileItem[] = Array.from(files).map(file => ({
+      id: `file-${Date.now()}-${Math.random()}`,
+      file,
+      uploadedAt: new Date(),
+      status: 'uploaded'
+    }));
+
+    onFilesAdded(newFiles);
+    addToast(`${newFiles.length} file(s) added`, 'success');
+
+    // Reset input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const remainingChars = maxLength - instruction.length;
   const isNearLimit = remainingChars < 100;
   const selectedToolsData = getSelectedToolsData();
 
   return (
-    <div className="card">
-      <div className="space-y-4">
+    <div className="card-gradient">
+      <div className="space-y-6">
         {/* Tools Selection */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={openToolsModal}
-              className="flex items-center space-x-2 px-3 py-2 bg-primary-100 text-primary-700 rounded-lg hover:bg-primary-200 transition-colors"
+              className="flex items-center space-x-2 px-4 py-2.5 min-h-[44px] bg-white/80 backdrop-blur-sm text-primary-700 rounded-2xl font-medium hover:bg-white hover:shadow-soft hover:scale-105 transition-all duration-200 border border-primary-200/50 touch-manipulation"
             >
-              <span>🛠️</span>
-              <span className="font-medium">Tools</span>
+              <span className="text-lg">🛠️</span>
+              <span className="font-semibold">Tools</span>
               {selectedTools.length > 0 && (
-                <span className="bg-primary-600 text-white text-xs px-2 py-1 rounded-full">
+                <span className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white text-xs px-2.5 py-1 rounded-full font-bold">
                   {selectedTools.length}
                 </span>
               )}
             </button>
 
             {selectedToolsData.length > 0 && (
-              <div className="flex items-center space-x-1">
-                <span className="text-sm text-gray-600">Active:</span>
-                <div className="flex space-x-1">
-                  {selectedToolsData.slice(0, 3).map(tool => (
-                    <span
-                      key={tool.id}
-                      className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full"
-                      title={tool.name}
-                    >
-                      {tool.icon} {tool.name.split(' ')[0]}
-                    </span>
-                  ))}
-                  {selectedToolsData.length > 3 && (
-                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
-                      +{selectedToolsData.length - 3} more
-                    </span>
-                  )}
-                </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-sm text-gray-700 font-medium hidden sm:inline">Active:</span>
+                {selectedToolsData.slice(0, 3).map(tool => (
+                  <span
+                    key={tool.id}
+                    className="text-xs bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200/50 hover:scale-105 transition-transform duration-200"
+                    title={tool.name}
+                  >
+                    {tool.icon} {tool.name.split(' ')[0]}
+                  </span>
+                ))}
+                {selectedToolsData.length > 3 && (
+                  <span className="text-xs bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200/50">
+                    +{selectedToolsData.length - 3}
+                  </span>
+                )}
               </div>
             )}
           </div>
 
-          <span className={`text-sm ${isNearLimit ? 'text-amber-500' : 'text-gray-500'}`}>
-            {remainingChars} chars
+          <span className={`text-sm font-semibold ${isNearLimit ? 'text-warning-600' : 'text-gray-600'}`}>
+            {remainingChars} chars remaining
           </span>
         </div>
 
-        {/* Input Area */}
-        <div className={`relative rounded-lg border-2 transition-colors ${
-          isFocused ? 'border-primary-500' : 'border-gray-300'
+        {/* Input Area with Glassmorphism */}
+        <div className={`relative rounded-3xl border-2 transition-all duration-200 ${
+          isFocused
+            ? 'border-primary-500 bg-white shadow-medium scale-[1.01]'
+            : 'border-white/50 bg-white/80 backdrop-blur-sm hover:bg-white/90'
         }`}>
           <textarea
             ref={textareaRef}
@@ -166,48 +193,72 @@ export const QuickInstructionInput: React.FC<QuickInstructionInputProps> = ({
             onBlur={() => setIsFocused(false)}
             onKeyDown={handleKeyDown}
             placeholder="Ask your AI assistant anything about data management..."
-            className="w-full p-4 resize-none outline-none rounded-lg min-h-[80px] max-h-[200px]"
+            className="w-full p-6 resize-none outline-none rounded-3xl min-h-[100px] max-h-[240px] text-base bg-transparent placeholder:text-gray-400 scrollbar-custom"
             maxLength={maxLength}
             disabled={isProcessing}
           />
         </div>
 
-        {/* Controls */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <p className="text-xs text-gray-500">
-              Press <kbd className="px-2 py-1 bg-gray-200 rounded">Ctrl</kbd> + <kbd className="px-2 py-1 bg-gray-200 rounded">Enter</kbd> to send
+        {/* Controls - Mobile Optimized */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <p className="text-xs text-gray-600 font-medium hidden sm:block">
+              Press <kbd className="px-2 py-1 bg-white/80 rounded-lg border border-gray-200 font-semibold">Ctrl</kbd> + <kbd className="px-2 py-1 bg-white/80 rounded-lg border border-gray-200 font-semibold">Enter</kbd> to send
             </p>
-            {uploadedFiles.length > 0 && (
-              <span className="text-xs text-green-600">
-                📎 {uploadedFiles.length} file{uploadedFiles.length > 1 ? 's' : ''} attached
-              </span>
-            )}
           </div>
 
-          <div className="flex space-x-2">
+          <div className="flex space-x-3 w-full sm:w-auto">
+            {/* Hidden file input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              multiple
+              onChange={handleFileChange}
+              className="hidden"
+            />
+
+            {/* File Upload Button */}
+            {onFilesAdded && (
+              <button
+                onClick={handleFileUploadClick}
+                disabled={isProcessing}
+                className="inline-flex items-center space-x-2 px-4 py-2.5 min-h-[44px] bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl font-medium border border-gray-200 hover:bg-white hover:border-primary-300 hover:text-primary-700 hover:shadow-soft hover:scale-105 active:scale-95 transition-all duration-200 touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex-1 sm:flex-none"
+                title="Attach files"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+                <span className="hidden sm:inline">Attach</span>
+                {uploadedFiles.length > 0 && (
+                  <span className="bg-gradient-to-r from-primary-600 to-secondary-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                    {uploadedFiles.length}
+                  </span>
+                )}
+              </button>
+            )}
+
             <button
               onClick={() => setInstruction('')}
               disabled={!instruction || isProcessing}
-              className="btn-secondary text-sm"
+              className="btn-secondary flex-1 sm:flex-none"
             >
               Clear
             </button>
             <button
               onClick={handleSubmit}
               disabled={!instruction.trim() || isProcessing}
-              className="btn-primary text-sm"
+              className="btn-primary flex-1 sm:flex-none"
             >
               {isProcessing ? (
-                <>
+                <span className="flex items-center justify-center">
                   <span className="inline-block animate-spin mr-2">⚙️</span>
-                  Processing...
-                </>
+                  <span>Processing...</span>
+                </span>
               ) : (
-                <>
+                <span className="flex items-center justify-center">
                   <span className="mr-2">🚀</span>
-                  Send
-                </>
+                  <span>Send</span>
+                </span>
               )}
             </button>
           </div>

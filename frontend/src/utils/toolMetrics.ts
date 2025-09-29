@@ -9,7 +9,7 @@ export const getDefaultMetrics = (): ToolMetrics => ({
   scalability: 3
 });
 
-export const getDefaultDetails = (name: string, description: string): ToolDetails => ({
+export const getDefaultDetails = (_name: string, description: string): ToolDetails => ({
   fullDescription: `${description}. This enterprise-grade tool provides automated solutions with industry-leading performance and reliability.`,
   keyFeatures: [
     'Automated processing',

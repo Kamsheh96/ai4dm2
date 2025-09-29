@@ -53,4 +53,5 @@ export const ToolsProvider: React.FC<ToolsProviderProps> = ({ children }) => {
   return <ToolsContext.Provider value={value}>{children}</ToolsContext.Provider>;
 };
 
+export { ToolsContext };
 export default ToolsContext;

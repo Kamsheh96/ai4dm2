@@ -24,46 +24,68 @@ export const FileList: React.FC<FileListProps> = ({ files, onRemove, title }) =>
 
   if (files.length === 0) {
     return (
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">{title}</h3>
-        <p className="text-gray-500 text-center py-8">No files uploaded yet</p>
+      <div className="card-glass">
+        <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center">
+          <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          {title}
+        </h3>
+        <div className="text-center py-12">
+          <svg className="mx-auto h-16 w-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+          <p className="text-gray-500 text-base font-medium">No files uploaded yet</p>
+          <p className="text-gray-400 text-sm mt-2">Upload files to get started</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="card">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">{title}</h3>
-      <div className="space-y-2">
-        {files.map((fileItem) => (
+    <div className="card-glass">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-bold text-gray-900 flex items-center">
+          <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          {title}
+        </h3>
+        <span className="badge-info">{files.length} file{files.length !== 1 ? 's' : ''}</span>
+      </div>
+      <div className="space-y-3">
+        {files.map((fileItem, index) => (
           <div
             key={fileItem.id}
-            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+            className="group flex items-center justify-between p-4 bg-white/50 rounded-2xl border border-gray-100/50 hover:bg-white hover:shadow-soft hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-200 animate-scale-in"
+            style={{ animationDelay: `${index * 50}ms` }}
           >
-            <div className="flex items-center space-x-3">
-              <svg
-                className="w-8 h-8 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-              <div>
-                <p className="text-sm font-medium text-gray-900">{fileItem.file.name}</p>
-                <p className="text-xs text-gray-500">
-                  {formatFileSize(fileItem.file.size)} • {formatDate(fileItem.uploadedAt)}
+            <div className="flex items-center space-x-4 min-w-0 flex-1">
+              <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-primary-100 to-secondary-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <svg
+                  className="w-5 h-5 text-primary-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-gray-900 truncate">{fileItem.file.name}</p>
+                <p className="text-xs text-gray-500 mt-0.5 font-medium">
+                  {formatFileSize(fileItem.file.size)} · {formatDate(fileItem.uploadedAt)}
                 </p>
               </div>
             </div>
             <button
               onClick={() => onRemove(fileItem.id)}
-              className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+              className="flex-shrink-0 ml-3 p-2 text-gray-400 hover:text-error-600 hover:bg-error-50 rounded-xl transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-error-500 focus:ring-offset-2"
               aria-label={`Remove ${fileItem.file.name}`}
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

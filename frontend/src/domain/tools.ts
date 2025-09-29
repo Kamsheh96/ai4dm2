@@ -24,8 +24,8 @@ export interface DataTool {
   complexity: 'basic' | 'intermediate' | 'advanced';
   estimatedTime: string;
   icon: string;
-  metrics: ToolMetrics;
-  details: ToolDetails;
+  metrics?: ToolMetrics;
+  details?: ToolDetails;
 }
 
 export type ToolCategory =

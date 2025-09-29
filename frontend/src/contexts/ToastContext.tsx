@@ -65,4 +65,5 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
   return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>;
 };
 
+export { ToastContext };
 export default ToastContext;

@@ -31,8 +31,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
       type,
       content,
       timestamp: new Date(),
-      tools,
-      files
+      ...(tools && { tools }),
+      ...(files && { files })
     };
 
     setMessages(prev => [...prev, newMessage]);
@@ -57,4 +57,5 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 };
 
+export { ChatContext };
 export default ChatContext;
