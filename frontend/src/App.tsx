@@ -2,20 +2,27 @@ import React, { useState, useCallback } from 'react';
 import { ToastProvider } from '@contexts/ToastContext';
 import { ToolsProvider } from '@contexts/ToolsContext';
 import { ChatProvider } from '@contexts/ChatContext';
+import { DashboardProvider } from '@contexts/DashboardContext';
 import { ToastContainer } from '@ui/ToastContainer';
 import { ChatWorkspace } from '@components/ChatWorkspace';
 import { ToolsModal } from '@components/ToolsModal';
 import { OutputDisplay } from '@components/OutputDisplay';
-import { WORKSTREAMS } from '@domain/models';
+import { DashboardHome } from '@components/DashboardHome';
+import { KnowledgeBaseManager } from '@components/KnowledgeBaseManager';
 import type { FileItem, ProcessedFile } from '@domain/models';
 import { useToast } from '@hooks/useToast';
 import { useChat } from '@hooks/useChat';
+import { useDashboard } from '@hooks/useDashboard';
+
+type View = 'dashboard' | 'chat' | 'knowledge-base';
 
 const AppContent: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useState<FileItem[]>([]);
   const [outputFiles] = useState<ProcessedFile[]>([]);
+  const [currentView, setCurrentView] = useState<View>('dashboard');
   const { addToast } = useToast();
   const { messages } = useChat();
+  const { unreadCount } = useDashboard();
 
   const handleFilesAdded = useCallback((newFiles: FileItem[]): void => {
     setUploadedFiles(prev => [...prev, ...newFiles]);
@@ -38,7 +45,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/20">
-      {/* Premium Header with Glass Effect */}
+      {/* Premium Header with Glass Effect and Navigation */}
       <header className="glass sticky top-0 z-40 border-b border-white/20 shadow-soft">
         <div className="safe-max-width safe-padding py-6">
           <div className="flex items-center justify-between">
@@ -51,70 +58,92 @@ const AppContent: React.FC = () => {
                 <p className="text-sm text-gray-600 mt-0.5 font-medium">AI Agents for Data Management</p>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
-              <span className="text-sm text-gray-500 font-medium">v2.0.0</span>
-            </div>
+
+            {/* Navigation */}
+            <nav className="flex items-center space-x-2">
+              <button
+                onClick={() => setCurrentView('dashboard')}
+                className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
+                  currentView === 'dashboard'
+                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-soft'
+                    : 'bg-white/50 text-gray-700 hover:bg-white hover:shadow-soft'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span className="hidden sm:inline">Dashboard</span>
+                {unreadCount > 0 && currentView !== 'dashboard' && (
+                  <span className="bg-error-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                    {unreadCount}
+                  </span>
+                )}
+              </button>
+
+              <button
+                onClick={() => setCurrentView('chat')}
+                className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
+                  currentView === 'chat'
+                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-soft'
+                    : 'bg-white/50 text-gray-700 hover:bg-white hover:shadow-soft'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+                <span className="hidden sm:inline">Chat</span>
+              </button>
+
+              <button
+                onClick={() => setCurrentView('knowledge-base')}
+                className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
+                  currentView === 'knowledge-base'
+                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-soft'
+                    : 'bg-white/50 text-gray-700 hover:bg-white hover:shadow-soft'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <span className="hidden sm:inline">Knowledge Bases</span>
+              </button>
+
+              <span className="text-sm text-gray-500 font-medium hidden md:inline ml-4">v2.0.0</span>
+            </nav>
           </div>
         </div>
       </header>
 
       {/* Main Content with Generous Spacing */}
       <div className="safe-max-width safe-padding py-12">
-        {/* Unified Chat Workspace - Expands after first message */}
-        <div className="mb-12 animate-fade-in">
-          <ChatWorkspace
-            uploadedFiles={uploadedFiles}
-            onFilesAdded={handleFilesAdded}
-            onFileRemove={handleFileRemove}
-          />
-        </div>
+        {/* Dashboard View */}
+        {currentView === 'dashboard' && <DashboardHome />}
 
-        {/* Output Files - Show when conversation started */}
-        {hasStartedChat && (
-          <div className="mt-8 animate-slide-up">
-            <OutputDisplay
-              files={outputFiles}
-              onDownload={handleDownload}
-              onDownloadAll={handleDownloadAll}
-            />
-          </div>
+        {/* Chat View */}
+        {currentView === 'chat' && (
+          <>
+            <div className="mb-12 animate-fade-in">
+              <ChatWorkspace
+                uploadedFiles={uploadedFiles}
+                onFilesAdded={handleFilesAdded}
+                onFileRemove={handleFileRemove}
+              />
+            </div>
+
+            {hasStartedChat && (
+              <div className="mt-8 animate-slide-up">
+                <OutputDisplay
+                  files={outputFiles}
+                  onDownload={handleDownload}
+                  onDownloadAll={handleDownloadAll}
+                />
+              </div>
+            )}
+          </>
         )}
 
-        {/* Workstream Cards - Premium Section */}
-        <div className="section-divider"></div>
-
-        <div className="mt-16 animate-fade-in animate-delay-200">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">AI4DM Workstreams</h2>
-            <p className="text-gray-600 text-lg leading-relaxed">Specialized AI agents tailored for data management excellence</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {WORKSTREAMS.map((workstream, index) => (
-              <div
-                key={workstream.id}
-                className="card-interactive group animate-scale-in"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-gray-900 text-lg group-hover:text-gradient-primary transition-all duration-200">
-                    {workstream.name}
-                  </h3>
-                  <span className={`text-xs px-3 py-1.5 rounded-full font-semibold ${
-                    workstream.status === 'active'
-                      ? 'badge-success'
-                      : workstream.status === 'planned'
-                      ? 'badge-warning'
-                      : 'badge-info'
-                  }`}>
-                    {workstream.status}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600 leading-relaxed">{workstream.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Knowledge Base View */}
+        {currentView === 'knowledge-base' && <KnowledgeBaseManager />}
       </div>
 
       {/* Modals and Overlays */}
@@ -127,11 +156,13 @@ const AppContent: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <ToastProvider>
-      <ToolsProvider>
-        <ChatProvider>
-          <AppContent />
-        </ChatProvider>
-      </ToolsProvider>
+      <DashboardProvider>
+        <ToolsProvider>
+          <ChatProvider>
+            <AppContent />
+          </ChatProvider>
+        </ToolsProvider>
+      </DashboardProvider>
     </ToastProvider>
   );
 };
