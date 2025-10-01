@@ -181,8 +181,8 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
               isUser
                 ? 'bg-gradient-to-br from-primary-600 to-secondary-600 text-white'
                 : isSystem
-                ? 'bg-warning-100 text-warning-800 border border-warning-200'
-                : 'bg-white/80 backdrop-blur-sm text-gray-900 border border-gray-100'
+                ? 'bg-warning-900/50 text-warning-200 border border-warning-700'
+                : 'bg-gray-800 text-white border border-gray-700'
             }`}
           >
             <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
@@ -200,7 +200,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                         className={`text-xs px-3 py-1.5 rounded-full font-medium ${
                           isUser
                             ? 'bg-white/20 backdrop-blur-sm'
-                            : 'bg-primary-100 text-primary-700 border border-primary-200'
+                            : 'bg-primary-900/50 text-primary-300 border border-primary-700'
                         }`}
                       >
                         {tool.icon} {tool.name}
@@ -221,7 +221,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                       className={`text-xs px-3 py-1.5 rounded-full font-medium ${
                         isUser
                           ? 'bg-white/20 backdrop-blur-sm'
-                          : 'bg-gray-100 text-gray-700 border border-gray-200'
+                          : 'bg-gray-700 text-gray-200 border border-gray-600'
                       }`}
                     >
                       📄 {filename}
@@ -232,7 +232,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
             )}
           </div>
 
-          <div className={`text-xs text-gray-500 mt-2 font-medium ${isUser ? 'text-right' : 'text-left'}`}>
+          <div className={`text-xs text-gray-400 mt-2 font-medium ${isUser ? 'text-right' : 'text-left'}`}>
             {formatTimestamp(message.timestamp)}
           </div>
         </div>
@@ -240,14 +240,14 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
         <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-soft ${
           isUser
             ? 'order-2 ml-3 bg-gradient-to-br from-primary-600 to-secondary-600'
-            : 'order-1 mr-3 bg-gradient-to-br from-gray-200 to-gray-300'
+            : 'order-1 mr-3 bg-gradient-to-br from-gray-700 to-gray-800'
         }`}>
           {isUser ? (
             <span className="text-white text-lg">👤</span>
           ) : isSystem ? (
-            <span className="text-warning-600 text-lg">⚠️</span>
+            <span className="text-warning-400 text-lg">⚠️</span>
           ) : (
-            <span className="text-gray-600 text-lg">🤖</span>
+            <span className="text-white text-lg">🤖</span>
           )}
         </div>
       </div>
@@ -260,7 +260,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
 
   return (
     <div
-      className={`card-glass transition-all duration-500 ease-in-out ${
+      className={`bg-gray-800 rounded-3xl border border-gray-700 shadow-2xl p-8 transition-all duration-500 ease-in-out ${
         isExpanded ? 'animate-slide-up' : 'animate-fade-in'
       }`}
       style={{
@@ -276,7 +276,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   onClick={openToolsModal}
-                  className="flex items-center space-x-2 px-4 py-2.5 min-h-[44px] bg-white/80 backdrop-blur-sm text-primary-700 rounded-2xl font-medium hover:bg-white hover:shadow-soft hover:scale-105 transition-all duration-200 border border-primary-200/50 touch-manipulation"
+                  className="flex items-center space-x-2 px-4 py-2.5 min-h-[44px] bg-gray-700 text-primary-300 rounded-2xl font-medium hover:bg-gray-600 hover:shadow-soft hover:scale-105 transition-all duration-200 border border-gray-600 touch-manipulation"
                 >
                   <span className="text-lg">🛠️</span>
                   <span className="font-semibold">Tools</span>
@@ -289,18 +289,18 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
 
                 {selectedToolsData.length > 0 && (
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-sm text-gray-700 font-medium hidden sm:inline">Active:</span>
+                    <span className="text-sm text-gray-300 font-medium hidden sm:inline">Active:</span>
                     {selectedToolsData.slice(0, 3).map(tool => (
                       <span
                         key={tool.id}
-                        className="text-xs bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200/50 hover:scale-105 transition-transform duration-200"
+                        className="text-xs bg-gray-700 text-gray-200 px-3 py-1.5 rounded-full font-semibold border border-gray-600 hover:scale-105 transition-transform duration-200"
                         title={tool.name}
                       >
                         {tool.icon} {tool.name.split(' ')[0]}
                       </span>
                     ))}
                     {selectedToolsData.length > 3 && (
-                      <span className="text-xs bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200/50">
+                      <span className="text-xs bg-gray-700 text-gray-200 px-3 py-1.5 rounded-full font-semibold border border-gray-600">
                         +{selectedToolsData.length - 3}
                       </span>
                     )}
@@ -308,7 +308,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                 )}
               </div>
 
-              <span className={`text-sm font-semibold ${isNearLimit ? 'text-warning-600' : 'text-gray-600'}`}>
+              <span className={`text-sm font-semibold ${isNearLimit ? 'text-warning-400' : 'text-gray-300'}`}>
                 {remainingChars} chars remaining
               </span>
             </div>
@@ -316,8 +316,8 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
             {/* Input Area */}
             <div className={`relative rounded-3xl border-2 transition-all duration-200 ${
               isFocused
-                ? 'border-primary-500 bg-white shadow-medium scale-[1.01]'
-                : 'border-white/50 bg-white/80 backdrop-blur-sm hover:bg-white/90'
+                ? 'border-primary-500 bg-gray-700 shadow-medium scale-[1.01]'
+                : 'border-gray-600 bg-gray-700 hover:bg-gray-650'
             }`}>
               <textarea
                 ref={textareaRef}
@@ -327,7 +327,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                 onBlur={() => setIsFocused(false)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask your AI assistant anything about data management..."
-                className="w-full p-6 resize-none outline-none rounded-3xl min-h-[100px] max-h-[240px] text-base bg-transparent placeholder:text-gray-400 scrollbar-custom"
+                className="w-full p-6 resize-none outline-none rounded-3xl min-h-[100px] max-h-[240px] text-base bg-transparent text-white placeholder:text-gray-400 scrollbar-custom"
                 maxLength={maxLength}
                 disabled={isProcessing}
               />
@@ -335,20 +335,20 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
 
             {/* Uploaded Files Preview */}
             {uploadedFiles.length > 0 && (
-              <div className="bg-primary-50/50 backdrop-blur-sm rounded-2xl p-4 border border-primary-200/50">
+              <div className="bg-gray-700 rounded-2xl p-4 border border-gray-600">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center space-x-2">
-                    <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                     </svg>
-                    <h4 className="text-sm font-bold text-primary-900">Attached Files ({uploadedFiles.length})</h4>
+                    <h4 className="text-sm font-bold text-white">Attached Files ({uploadedFiles.length})</h4>
                   </div>
                 </div>
                 <div className="space-y-2">
                   {uploadedFiles.map((fileItem) => (
                     <div
                       key={fileItem.id}
-                      className="flex items-center justify-between bg-white/80 rounded-xl p-3 hover:bg-white transition-all duration-200"
+                      className="flex items-center justify-between bg-gray-800 rounded-xl p-3 hover:bg-gray-750 transition-all duration-200"
                     >
                       <div className="flex items-center space-x-3 min-w-0 flex-1">
                         <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
@@ -357,13 +357,13 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                           </svg>
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-semibold text-gray-900 truncate">{fileItem.file.name}</p>
-                          <p className="text-xs text-gray-500">{formatFileSize(fileItem.file.size)}</p>
+                          <p className="text-sm font-semibold text-white truncate">{fileItem.file.name}</p>
+                          <p className="text-xs text-gray-400">{formatFileSize(fileItem.file.size)}</p>
                         </div>
                       </div>
                       <button
                         onClick={() => onFileRemove(fileItem.id)}
-                        className="flex-shrink-0 ml-2 p-1.5 text-gray-400 hover:text-error-600 hover:bg-error-50 rounded-lg transition-all duration-200"
+                        className="flex-shrink-0 ml-2 p-1.5 text-gray-400 hover:text-error-400 hover:bg-error-900/30 rounded-lg transition-all duration-200"
                         aria-label={`Remove ${fileItem.file.name}`}
                       >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -379,8 +379,8 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
             {/* Controls */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                <p className="text-xs text-gray-600 font-medium hidden sm:block">
-                  Press <kbd className="px-2 py-1 bg-white/80 rounded-lg border border-gray-200 font-semibold">Ctrl</kbd> + <kbd className="px-2 py-1 bg-white/80 rounded-lg border border-gray-200 font-semibold">Enter</kbd> to send
+                <p className="text-xs text-gray-300 font-medium hidden sm:block">
+                  Press <kbd className="px-2 py-1 bg-gray-700 rounded-lg border border-gray-600 font-semibold text-white">Ctrl</kbd> + <kbd className="px-2 py-1 bg-gray-700 rounded-lg border border-gray-600 font-semibold text-white">Enter</kbd> to send
                 </p>
               </div>
 
@@ -396,7 +396,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                 <button
                   onClick={handleFileUploadClick}
                   disabled={isProcessing}
-                  className="inline-flex items-center space-x-2 px-4 py-2.5 min-h-[44px] bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl font-medium border border-gray-200 hover:bg-white hover:border-primary-300 hover:text-primary-700 hover:shadow-soft hover:scale-105 active:scale-95 transition-all duration-200 touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex-1 sm:flex-none"
+                  className="inline-flex items-center space-x-2 px-4 py-2.5 min-h-[44px] bg-gray-700 text-gray-200 rounded-2xl font-medium border border-gray-600 hover:bg-gray-600 hover:border-primary-500 hover:text-primary-300 hover:shadow-soft hover:scale-105 active:scale-95 transition-all duration-200 touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex-1 sm:flex-none"
                   title="Attach files"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -457,18 +457,18 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
               {isProcessing && (
                 <div className="flex justify-start mb-4" ref={!messages.length ? lastMessageRef : null}>
                   <div className="order-2 max-w-[80%]">
-                    <div className="bg-white/80 backdrop-blur-sm text-gray-900 rounded-2xl px-6 py-4 shadow-soft border border-gray-100">
+                    <div className="bg-gray-800 text-white rounded-2xl px-6 py-4 shadow-soft border border-gray-700">
                       <div className="flex items-center space-x-3">
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"></div>
                           <div className="w-2 h-2 bg-secondary-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
                           <div className="w-2 h-2 bg-accent-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                         </div>
-                        <span className="text-sm font-medium text-gray-700">AI is thinking...</span>
+                        <span className="text-sm font-medium text-gray-200">AI is thinking...</span>
                       </div>
                     </div>
                   </div>
-                  <div className="order-1 mr-3 w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center shadow-soft">
+                  <div className="order-1 mr-3 w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl flex items-center justify-center shadow-soft">
                     <span className="text-white text-lg">🤖</span>
                   </div>
                 </div>
@@ -476,13 +476,13 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
             </div>
 
             {/* Compact Input Area in Expanded Mode */}
-            <div className="border-t border-gray-200/50 p-4">
+            <div className="border-t border-gray-700 p-4">
               {/* Top Action Bar */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={openToolsModal}
-                    className="flex items-center space-x-2 px-4 py-2 min-h-[44px] bg-white/80 backdrop-blur-sm text-primary-700 rounded-2xl font-medium hover:bg-white hover:shadow-soft hover:scale-105 transition-all duration-200 border border-primary-200/50 touch-manipulation"
+                    className="flex items-center space-x-2 px-4 py-2 min-h-[44px] bg-gray-700 text-primary-300 rounded-2xl font-medium hover:bg-gray-600 hover:shadow-soft hover:scale-105 transition-all duration-200 border border-gray-600 touch-manipulation"
                   >
                     <span className="text-lg">🛠️</span>
                     <span className="font-semibold hidden sm:inline">Tools</span>
@@ -497,14 +497,14 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                       {selectedToolsData.slice(0, 2).map(tool => (
                         <span
                           key={tool.id}
-                          className="text-xs bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200/50 hidden md:inline-block"
+                          className="text-xs bg-gray-700 text-gray-200 px-3 py-1.5 rounded-full font-semibold border border-gray-600 hidden md:inline-block"
                           title={tool.name}
                         >
                           {tool.icon} {tool.name.split(' ')[0]}
                         </span>
                       ))}
                       {selectedToolsData.length > 2 && (
-                        <span className="text-xs bg-white/80 backdrop-blur-sm text-gray-700 px-3 py-1.5 rounded-full font-semibold border border-gray-200/50 hidden md:inline-block">
+                        <span className="text-xs bg-gray-700 text-gray-200 px-3 py-1.5 rounded-full font-semibold border border-gray-600 hidden md:inline-block">
                           +{selectedToolsData.length - 2}
                         </span>
                       )}
@@ -517,7 +517,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                       window.location.reload();
                     }
                   }}
-                  className="flex items-center space-x-2 px-4 py-2 min-h-[44px] bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl font-medium hover:bg-error-50 hover:text-error-600 hover:border-error-300 hover:shadow-soft hover:scale-105 transition-all duration-200 border border-gray-200/50 touch-manipulation"
+                  className="flex items-center space-x-2 px-4 py-2 min-h-[44px] bg-gray-700 text-gray-200 rounded-2xl font-medium hover:bg-error-900/50 hover:text-error-300 hover:border-error-700 hover:shadow-soft hover:scale-105 transition-all duration-200 border border-gray-600 touch-manipulation"
                   title="Clear chat and start over"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -535,7 +535,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                     onChange={(e) => setInstruction(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Continue the conversation..."
-                    className="w-full p-4 resize-none outline-none rounded-2xl min-h-[60px] max-h-[120px] text-base bg-white/80 backdrop-blur-sm border-2 border-gray-200 focus:border-primary-500 focus:bg-white placeholder:text-gray-400 scrollbar-custom transition-all duration-200"
+                    className="w-full p-4 resize-none outline-none rounded-2xl min-h-[60px] max-h-[120px] text-base bg-gray-700 text-white border-2 border-gray-600 focus:border-primary-500 focus:bg-gray-650 placeholder:text-gray-400 scrollbar-custom transition-all duration-200"
                     maxLength={maxLength}
                     disabled={isProcessing}
                   />
@@ -544,7 +544,7 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                   <button
                     onClick={handleFileUploadClick}
                     disabled={isProcessing}
-                    className="p-3 min-h-[44px] min-w-[44px] bg-white/80 backdrop-blur-sm text-gray-700 rounded-xl font-medium border border-gray-200 hover:bg-white hover:border-primary-300 hover:text-primary-700 hover:shadow-soft hover:scale-105 active:scale-95 transition-all duration-200 touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="p-3 min-h-[44px] min-w-[44px] bg-gray-700 text-gray-200 rounded-xl font-medium border border-gray-600 hover:bg-gray-600 hover:border-primary-500 hover:text-primary-300 hover:shadow-soft hover:scale-105 active:scale-95 transition-all duration-200 touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Attach files"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -569,12 +569,12 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({
                   {uploadedFiles.map((fileItem) => (
                     <span
                       key={fileItem.id}
-                      className="inline-flex items-center space-x-2 text-xs bg-primary-50 text-primary-700 px-3 py-1.5 rounded-full font-semibold border border-primary-200"
+                      className="inline-flex items-center space-x-2 text-xs bg-gray-700 text-gray-200 px-3 py-1.5 rounded-full font-semibold border border-gray-600"
                     >
                       <span>📄 {fileItem.file.name}</span>
                       <button
                         onClick={() => onFileRemove(fileItem.id)}
-                        className="hover:text-error-600 transition-colors"
+                        className="hover:text-error-400 transition-colors"
                         aria-label={`Remove ${fileItem.file.name}`}
                       >
                         ×

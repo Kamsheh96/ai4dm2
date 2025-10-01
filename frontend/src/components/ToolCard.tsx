@@ -22,7 +22,7 @@ const CostMiniDisplay: React.FC<{ cost: string }> = ({ cost }) => {
   const level = costLevels[cost as keyof typeof costLevels] || costLevels.medium;
 
   return (
-    <span className="text-xs text-gray-600 font-medium">
+    <span className="text-xs text-gray-300 font-medium">
       {level.symbol}
     </span>
   );
@@ -36,8 +36,8 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, isSelected, onToggle, 
     <div
       className={`border-2 rounded-2xl transition-all duration-200 ${
         isSelected
-          ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-secondary-50/30 shadow-soft'
-          : 'border-gray-200/50 bg-white/80 backdrop-blur-sm hover:border-primary-300 hover:shadow-soft hover:scale-[1.02]'
+          ? 'border-primary-500 bg-gradient-to-br from-primary-900/50 to-secondary-900/30 shadow-soft'
+          : 'border-gray-700 bg-gray-800 hover:border-primary-600 hover:shadow-soft hover:scale-[1.02]'
       }`}
     >
       {/* Main Card Content */}
@@ -47,13 +47,13 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, isSelected, onToggle, 
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-soft ${
               isSelected
                 ? 'bg-gradient-to-br from-primary-600 to-secondary-600'
-                : 'bg-gradient-to-br from-gray-100 to-gray-200'
+                : 'bg-gradient-to-br from-gray-700 to-gray-800'
             }`}>
               <span className={`text-2xl ${isSelected ? 'filter brightness-110' : ''}`}>{tool.icon}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-bold text-gray-900 text-base leading-snug">{tool.name}</h3>
-              <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+              <h3 className="font-bold text-white text-base leading-snug">{tool.name}</h3>
+              <p className="text-sm text-gray-300 mt-1 leading-relaxed">
                 {tool.description}
               </p>
             </div>
@@ -73,17 +73,17 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, isSelected, onToggle, 
         <div className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className={`text-xs px-3 py-1.5 rounded-full font-semibold shadow-soft ${
-              TOOL_CATEGORIES[tool.category]?.color || 'bg-gray-100 text-gray-800'
+              TOOL_CATEGORIES[tool.category]?.color || 'bg-gray-700 text-gray-200'
             }`}>
               {TOOL_CATEGORIES[tool.category]?.name.split(' ')[0]}
             </span>
-            <span className="text-xs text-gray-600 font-medium px-2 py-1 bg-white/50 rounded-full">
+            <span className="text-xs text-gray-300 font-medium px-2 py-1 bg-gray-700 rounded-full">
               {tool.complexity}
             </span>
-            <span className="text-xs text-gray-600 font-medium px-2 py-1 bg-white/50 rounded-full">
+            <span className="text-xs text-gray-300 font-medium px-2 py-1 bg-gray-700 rounded-full">
               {tool.estimatedTime}
             </span>
-            <span className="text-xs text-gray-600 font-medium px-2 py-1 bg-white/50 rounded-full">
+            <span className="text-xs text-gray-300 font-medium px-2 py-1 bg-gray-700 rounded-full">
               <CostMiniDisplay cost={metrics.cost} />
             </span>
           </div>
@@ -92,7 +92,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, isSelected, onToggle, 
               e.stopPropagation();
               onViewDetails();
             }}
-            className="w-full px-4 py-2.5 text-sm text-primary-600 hover:text-primary-700 font-semibold hover:bg-primary-50 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 border-2 border-transparent hover:border-primary-200"
+            className="w-full px-4 py-2.5 text-sm text-primary-400 hover:text-primary-300 font-semibold hover:bg-primary-900/30 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 border-2 border-transparent hover:border-primary-700"
           >
             <span>View Full Details</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

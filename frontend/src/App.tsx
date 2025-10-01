@@ -3,6 +3,7 @@ import { ToastProvider } from '@contexts/ToastContext';
 import { ToolsProvider } from '@contexts/ToolsContext';
 import { ChatProvider } from '@contexts/ChatContext';
 import { DashboardProvider } from '@contexts/DashboardContext';
+import { AuthProvider } from '@contexts/AuthContext';
 import { ToastContainer } from '@ui/ToastContainer';
 import { ChatWorkspace } from '@components/ChatWorkspace';
 import { ToolsModal } from '@components/ToolsModal';
@@ -10,17 +11,21 @@ import { OutputDisplay } from '@components/OutputDisplay';
 import { DashboardHome } from '@components/DashboardHome';
 import { KnowledgeBaseManager } from '@components/KnowledgeBaseManager';
 import { ProfileSettings } from '@components/ProfileSettings';
+import { Login } from '@components/Login';
+import { ComingSoon } from '@components/ComingSoon';
 import type { FileItem, ProcessedFile } from '@domain/models';
 import { useToast } from '@hooks/useToast';
 import { useChat } from '@hooks/useChat';
 import { useDashboard } from '@hooks/useDashboard';
+import { useAuth } from '@hooks/useAuth';
 
-type View = 'dashboard' | 'chat' | 'knowledge-base' | 'settings';
+type View = 'chat' | 'dashboard' | 'knowledge-base' | 'settings' | 'coming-soon';
 
 const AppContent: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useState<FileItem[]>([]);
   const [outputFiles] = useState<ProcessedFile[]>([]);
   const [currentView, setCurrentView] = useState<View>('dashboard');
+  const { isAuthenticated, username, login, logout } = useAuth();
   const { addToast } = useToast();
   const { messages } = useChat();
   const { unreadCount } = useDashboard();
@@ -43,6 +48,11 @@ const AppContent: React.FC = () => {
   }, [addToast]);
 
   const hasStartedChat = messages.length > 0;
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <Login onLogin={login} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
@@ -81,7 +91,6 @@ const AppContent: React.FC = () => {
                   </span>
                 )}
               </button>
-
               <button
                 onClick={() => setCurrentView('chat')}
                 className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
@@ -111,17 +120,56 @@ const AppContent: React.FC = () => {
               </button>
 
               <button
-                onClick={() => setCurrentView('settings')}
-                className="p-2.5 min-h-[44px] min-w-[44px] rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-all duration-200"
-                title="Settings"
+                onClick={() => setCurrentView('coming-soon')}
+                className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
+                  currentView === 'coming-soon'
+                    ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-soft'
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
+                }`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
+                <span className="hidden sm:inline">Coming Soon</span>
               </button>
 
-              <span className="text-sm text-gray-400 font-medium hidden md:inline ml-4">v2.0.0</span>
+              {/* User Profile Section */}
+              <div className="flex items-center space-x-2 ml-4 pl-4 border-l border-gray-700">
+                <button
+                  onClick={() => setCurrentView('settings')}
+                  className="p-2.5 min-h-[44px] min-w-[44px] rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-all duration-200"
+                  title="Settings"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </button>
+
+                <div className="flex items-center space-x-3 bg-gray-700 rounded-2xl px-3 py-2">
+                  <div className="hidden sm:flex flex-col items-end">
+                    <span className="text-sm font-semibold text-white">{username}</span>
+                    <span className="text-xs text-gray-400">Data Manager</span>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">{username?.charAt(0).toUpperCase()}</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    if (confirm('Are you sure you want to logout?')) {
+                      logout();
+                    }
+                  }}
+                  className="p-2.5 min-h-[44px] min-w-[44px] rounded-2xl bg-gray-700 text-gray-300 hover:bg-error-900/30 hover:text-error-400 transition-all duration-200"
+                  title="Logout"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </button>
+              </div>
             </nav>
           </div>
         </div>
@@ -130,8 +178,11 @@ const AppContent: React.FC = () => {
       {/* Settings View (Full Screen Overlay) */}
       {currentView === 'settings' && <ProfileSettings onClose={() => setCurrentView('dashboard')} />}
 
+      {/* Coming Soon View (Full Screen Overlay) */}
+      {currentView === 'coming-soon' && <ComingSoon onClose={() => setCurrentView('dashboard')} />}
+
       {/* Main Content with Generous Spacing */}
-      {currentView !== 'settings' && (
+      {currentView !== 'settings' && currentView !== 'coming-soon' && (
         <div className="safe-max-width safe-padding py-12">
           {/* Dashboard View */}
           {currentView === 'dashboard' && <DashboardHome />}
@@ -173,14 +224,16 @@ const AppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <ToastProvider>
-      <DashboardProvider>
-        <ToolsProvider>
-          <ChatProvider>
-            <AppContent />
-          </ChatProvider>
-        </ToolsProvider>
-      </DashboardProvider>
-    </ToastProvider>
+    <AuthProvider>
+      <ToastProvider>
+        <DashboardProvider>
+          <ToolsProvider>
+            <ChatProvider>
+              <AppContent />
+            </ChatProvider>
+          </ToolsProvider>
+        </DashboardProvider>
+      </ToastProvider>
+    </AuthProvider>
   );
 };

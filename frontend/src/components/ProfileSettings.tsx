@@ -22,7 +22,19 @@ export const ProfileSettings: React.FC<ProfileSettingsProps> = ({ onClose }) => 
     <div className="fixed inset-0 bg-gray-900 z-50 overflow-hidden">
       {/* Header Bar */}
       <div className="bg-gray-800 border-b border-gray-700 px-6 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-white">Settings & Tools Management</h1>
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={onClose}
+            className="hover:opacity-80 transition-opacity duration-200 cursor-pointer bg-gray-900 rounded-lg p-1"
+          >
+            <img
+              src="/logo.png"
+              alt="AI4DM Logo"
+              className="h-12 w-auto object-cover"
+            />
+          </button>
+          <h1 className="text-xl font-bold text-white">Settings & Tools Management</h1>
+        </div>
         <button
           onClick={onClose}
           className="text-gray-400 hover:text-white transition-colors duration-200"

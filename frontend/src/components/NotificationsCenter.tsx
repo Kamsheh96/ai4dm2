@@ -96,7 +96,19 @@ export const NotificationsCenter: React.FC<NotificationsCenterProps> = ({ onClos
         {/* Modal Header */}
         <div className="px-8 py-6 border-b border-gray-700">
           <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-gray-500 uppercase tracking-wide">Notifications Center</p>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={onClose}
+                className="hover:opacity-80 transition-opacity duration-200 cursor-pointer bg-gray-800 rounded-lg p-1"
+              >
+                <img
+                  src="/logo.png"
+                  alt="AI4DM Logo"
+                  className="h-12 w-auto object-cover"
+                />
+              </button>
+              <p className="text-sm text-gray-500 uppercase tracking-wide">Notifications Center</p>
+            </div>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-white transition-colors duration-200"

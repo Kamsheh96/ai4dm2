@@ -85,8 +85,8 @@ export const KnowledgeBaseManager: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Knowledge Bases</h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <h2 className="text-3xl font-bold text-white mb-2">Knowledge Bases</h2>
+          <p className="text-gray-300 text-lg leading-relaxed">
             Connect AI agents to your enterprise knowledge sources
           </p>
         </div>
@@ -105,11 +105,11 @@ export const KnowledgeBaseManager: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {knowledgeBases.length === 0 ? (
           <div className="col-span-full text-center py-16">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gray-100 flex items-center justify-center">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gray-700 flex items-center justify-center">
               <span className="text-4xl">📚</span>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">No Knowledge Bases Yet</h3>
-            <p className="text-gray-600 mb-6">
+            <h3 className="text-xl font-bold text-white mb-2">No Knowledge Bases Yet</h3>
+            <p className="text-gray-300 mb-6">
               Connect to SharePoint, Confluence, or other knowledge sources
             </p>
             <button
@@ -135,7 +135,7 @@ export const KnowledgeBaseManager: React.FC = () => {
                       <span className="text-white text-xl">{getKbIcon(kb.type)}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-gray-900 text-lg mb-1 truncate">
+                      <h3 className="font-bold text-white text-lg mb-1 truncate">
                         {kb.name}
                       </h3>
                       <span className={`inline-flex text-xs px-3 py-1 rounded-full font-semibold ${statusBadge.className}`}>
@@ -147,7 +147,7 @@ export const KnowledgeBaseManager: React.FC = () => {
 
                 {/* Details */}
                 <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-sm text-gray-600">
+                  <div className="flex items-center text-sm text-gray-300">
                     <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                     </svg>
@@ -155,7 +155,7 @@ export const KnowledgeBaseManager: React.FC = () => {
                   </div>
 
                   {kb.url && (
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-300">
                       <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                       </svg>
@@ -164,7 +164,7 @@ export const KnowledgeBaseManager: React.FC = () => {
                   )}
 
                   {kb.lastSync && (
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-gray-300">
                       <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -176,7 +176,7 @@ export const KnowledgeBaseManager: React.FC = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex space-x-2 pt-4 border-t border-gray-200">
+                <div className="flex space-x-2 pt-4 border-t border-gray-700">
                   {kb.connected ? (
                     <>
                       <button
@@ -219,12 +219,12 @@ export const KnowledgeBaseManager: React.FC = () => {
       {/* Add Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm animate-fade-in">
-          <div className="card-glass max-w-md w-full animate-scale-in">
+          <div className="bg-gray-800 rounded-3xl border border-gray-700 shadow-2xl p-8 max-w-md w-full animate-scale-in">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">Add Knowledge Base</h3>
+              <h3 className="text-2xl font-bold text-white">Add Knowledge Base</h3>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition-all duration-200"
+                className="p-2 text-gray-400 hover:text-gray-200 hover:bg-gray-700 rounded-xl transition-all duration-200"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -234,7 +234,7 @@ export const KnowledgeBaseManager: React.FC = () => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Knowledge Base Name
                 </label>
                 <input
@@ -242,18 +242,18 @@ export const KnowledgeBaseManager: React.FC = () => {
                   value={newKbName}
                   onChange={(e) => setNewKbName(e.target.value)}
                   placeholder="e.g., PMO SharePoint Site"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary-500 outline-none transition-all duration-200 text-base"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-600 bg-gray-700 text-white focus:border-primary-500 outline-none transition-all duration-200 text-base placeholder:text-gray-400"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Type
                 </label>
                 <select
                   value={newKbType}
                   onChange={(e) => setNewKbType(e.target.value as KnowledgeBase['type'])}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary-500 outline-none transition-all duration-200 text-base"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-600 bg-gray-700 text-white focus:border-primary-500 outline-none transition-all duration-200 text-base"
                 >
                   <option value="sharepoint">SharePoint</option>
                   <option value="confluence">Confluence</option>
@@ -264,7 +264,7 @@ export const KnowledgeBaseManager: React.FC = () => {
 
               {(newKbType === 'sharepoint' || newKbType === 'confluence') && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">
                     URL
                   </label>
                   <input
@@ -272,7 +272,7 @@ export const KnowledgeBaseManager: React.FC = () => {
                     value={newKbUrl}
                     onChange={(e) => setNewKbUrl(e.target.value)}
                     placeholder="https://..."
-                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary-500 outline-none transition-all duration-200 text-base"
+                    className="w-full px-4 py-3 rounded-xl border-2 border-gray-600 bg-gray-700 text-white focus:border-primary-500 outline-none transition-all duration-200 text-base placeholder:text-gray-400"
                   />
                 </div>
               )}

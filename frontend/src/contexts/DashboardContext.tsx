@@ -145,6 +145,53 @@ function generateMockAssessments(): Assessment[] {
       status: 'not_started',
       assignedTo: 'Current User',
       priority: 'medium'
+    },
+    {
+      id: 'assess-4',
+      title: 'PDPL Compliance Assessment',
+      type: 'compliance',
+      dueDate: new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000), // 10 days
+      status: 'not_started',
+      assignedTo: 'Current User',
+      workstreamId: 'rca',
+      priority: 'high'
+    },
+    {
+      id: 'assess-5',
+      title: 'Data Security Audit',
+      type: 'security',
+      dueDate: new Date(now.getTime() + 28 * 24 * 60 * 60 * 1000), // 28 days
+      status: 'not_started',
+      assignedTo: 'Current User',
+      priority: 'medium'
+    },
+    {
+      id: 'assess-6',
+      title: 'Finance Department DQ Review',
+      type: 'data_quality',
+      dueDate: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000), // 5 days
+      status: 'not_started',
+      assignedTo: 'Current User',
+      workstreamId: 'dq-finance',
+      priority: 'high'
+    },
+    {
+      id: 'assess-7',
+      title: 'Master Data Management Audit',
+      type: 'governance',
+      dueDate: new Date(now.getTime() + 35 * 24 * 60 * 60 * 1000), // 35 days
+      status: 'not_started',
+      assignedTo: 'Current User',
+      priority: 'low'
+    },
+    {
+      id: 'assess-8',
+      title: 'Data Lineage Documentation Review',
+      type: 'data_quality',
+      dueDate: new Date(now.getTime() + 18 * 24 * 60 * 60 * 1000), // 18 days
+      status: 'not_started',
+      assignedTo: 'Current User',
+      priority: 'medium'
     }
   ];
 }

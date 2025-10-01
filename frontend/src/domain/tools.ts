@@ -314,6 +314,128 @@ export const DATA_TOOLS: DataTool[] = [
     complexity: 'intermediate',
     estimatedTime: '10-15 min',
     icon: '💾'
+  },
+  {
+    id: 'mdmo-standards-tracker',
+    name: 'MDMO Data Standards Tracker',
+    description: 'Monitor and validate compliance with Ministerial Data Management Office standards and guidelines',
+    category: 'compliance',
+    isActive: false,
+    complexity: 'intermediate',
+    estimatedTime: '8-12 min',
+    icon: '📋',
+    metrics: {
+      speed: 4,
+      quality: 5,
+      cost: 'medium',
+      reliability: 5,
+      scalability: 4
+    },
+    details: {
+      fullDescription: 'Comprehensive compliance tracking system for MDMO (Ministerial Data Management Office) data standards and governance requirements. Monitors adherence to national data management frameworks, validates data quality standards, and ensures alignment with government data policies.',
+      keyFeatures: [
+        'Real-time MDMO standards compliance monitoring',
+        'Automated data governance policy validation',
+        'National data framework alignment checking',
+        'Data quality metrics tracking per MDMO guidelines',
+        'Audit trail and reporting for regulatory reviews'
+      ],
+      useCases: [
+        'Government agency data governance compliance',
+        'National data standard implementation tracking',
+        'Ministerial reporting and audit preparation',
+        'Cross-agency data sharing compliance verification'
+      ],
+      limitations: [
+        'Requires updated MDMO standards library',
+        'May need customization for specific ministry requirements',
+        'Dependent on access to official MDMO documentation'
+      ],
+      alternatives: ['Manual MDMO compliance tracking', 'Custom governance frameworks'],
+      integrations: ['Government data portals', 'Ministry databases', 'National data repositories', 'SharePoint']
+    }
+  },
+  {
+    id: 'pdpl-assessor',
+    name: 'PDPL Compliance Assessor',
+    description: 'Personal Data Protection Law assessment and gap analysis for regulatory compliance',
+    category: 'compliance',
+    isActive: false,
+    complexity: 'advanced',
+    estimatedTime: '12-18 min',
+    icon: '🔐',
+    metrics: {
+      speed: 4,
+      quality: 5,
+      cost: 'high',
+      reliability: 5,
+      scalability: 4
+    },
+    details: {
+      fullDescription: 'Advanced compliance assessment tool specifically designed for Personal Data Protection Law (PDPL) requirements. Conducts comprehensive gap analysis, identifies personal data processing activities, and provides actionable recommendations for achieving and maintaining PDPL compliance.',
+      keyFeatures: [
+        'Automated PDPL compliance gap analysis',
+        'Personal data inventory and mapping',
+        'Data subject rights management tracking',
+        'Cross-border data transfer compliance checks',
+        'Privacy policy and consent validation',
+        'Data breach notification readiness assessment'
+      ],
+      useCases: [
+        'Initial PDPL compliance assessment',
+        'Ongoing regulatory compliance monitoring',
+        'Privacy impact assessments for new projects',
+        'Third-party vendor PDPL compliance verification',
+        'Data protection officer reporting and documentation'
+      ],
+      limitations: [
+        'Requires detailed data processing documentation',
+        'May need legal review for complex scenarios',
+        'Updates needed when PDPL regulations change'
+      ],
+      alternatives: ['OneTrust Privacy', 'TrustArc', 'Manual compliance audits'],
+      integrations: ['CRM systems', 'HR databases', 'Customer databases', 'Marketing platforms', 'Cloud storage']
+    }
+  },
+  {
+    id: 'regulatory-intelligence',
+    name: 'Regulatory Intelligence Hub',
+    description: 'Multi-jurisdictional data regulation tracking and impact analysis',
+    category: 'compliance',
+    isActive: false,
+    complexity: 'advanced',
+    estimatedTime: '10-15 min',
+    icon: '🌐',
+    metrics: {
+      speed: 5,
+      quality: 5,
+      cost: 'enterprise',
+      reliability: 5,
+      scalability: 5
+    },
+    details: {
+      fullDescription: 'Enterprise regulatory intelligence platform that monitors global data protection regulations including PDPL, GDPR, CCPA, and emerging frameworks. Provides real-time updates on regulatory changes and automated impact assessments on your data operations.',
+      keyFeatures: [
+        'Multi-jurisdiction regulatory monitoring',
+        'Automated regulatory change alerts',
+        'Cross-regulation compliance matrix',
+        'Impact analysis for regulatory updates',
+        'Compliance roadmap generation'
+      ],
+      useCases: [
+        'Multi-national data operations compliance',
+        'Regulatory horizon scanning',
+        'Cross-border data transfer compliance',
+        'Enterprise compliance strategy planning'
+      ],
+      limitations: [
+        'Requires enterprise subscription',
+        'Complex initial configuration',
+        'May require legal expertise for interpretation'
+      ],
+      alternatives: ['Thomson Reuters Regulatory Intelligence', 'LexisNexis', 'Manual regulatory tracking'],
+      integrations: ['Compliance management systems', 'Legal databases', 'Policy management platforms']
+    }
   }
 ];
 

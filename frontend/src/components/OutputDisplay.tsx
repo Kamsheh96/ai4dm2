@@ -20,11 +20,11 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
 
   if (files.length === 0) {
     return (
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Output Files</h3>
+      <div className="bg-gray-800 rounded-3xl border border-gray-700 shadow-2xl p-8">
+        <h3 className="text-lg font-semibold text-white mb-4">Output Files</h3>
         <div className="text-center py-12">
           <svg
-            className="mx-auto h-12 w-12 text-gray-400"
+            className="mx-auto h-12 w-12 text-gray-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -36,7 +36,7 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
               d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
             />
           </svg>
-          <p className="mt-2 text-gray-500">No output files yet</p>
+          <p className="mt-2 text-gray-300">No output files yet</p>
           <p className="text-sm text-gray-400 mt-1">Process a request to see output files here</p>
         </div>
       </div>
@@ -44,9 +44,9 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
   }
 
   return (
-    <div className="card">
+    <div className="bg-gray-800 rounded-3xl border border-gray-700 shadow-2xl p-8">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-800">Output Files ({files.length})</h3>
+        <h3 className="text-lg font-semibold text-white">Output Files ({files.length})</h3>
         {files.length > 0 && (
           <button
             onClick={onDownloadAll}
@@ -61,12 +61,12 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
         {files.map((file) => (
           <div
             key={file.id}
-            className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg border border-green-200"
+            className="flex items-center justify-between p-4 bg-gray-700 rounded-lg border border-gray-600 hover:bg-gray-650 transition-all duration-200"
           >
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-green-200 rounded-lg">
+              <div className="p-2 bg-success-900/30 rounded-lg">
                 <svg
-                  className="w-6 h-6 text-green-700"
+                  className="w-6 h-6 text-success-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -80,15 +80,15 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-gray-900">{file.name}</p>
+                <p className="font-medium text-white">{file.name}</p>
                 <div className="flex items-center space-x-3 mt-1">
-                  <span className="text-xs text-gray-500">{file.type}</span>
-                  <span className="text-xs text-gray-400">•</span>
-                  <span className="text-xs text-gray-500">{formatFileSize(file.size)}</span>
+                  <span className="text-xs text-gray-300">{file.type}</span>
+                  <span className="text-xs text-gray-500">•</span>
+                  <span className="text-xs text-gray-300">{formatFileSize(file.size)}</span>
                   {file.metadata.processingAgent && (
                     <>
-                      <span className="text-xs text-gray-400">•</span>
-                      <span className="text-xs text-gray-500">by {file.metadata.processingAgent}</span>
+                      <span className="text-xs text-gray-500">•</span>
+                      <span className="text-xs text-gray-300">by {file.metadata.processingAgent}</span>
                     </>
                   )}
                 </div>
@@ -97,7 +97,7 @@ export const OutputDisplay: React.FC<OutputDisplayProps> = ({
 
             <button
               onClick={() => onDownload(file)}
-              className="flex items-center space-x-1 px-3 py-1.5 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex items-center space-x-1 px-3 py-1.5 bg-gray-600 border border-gray-500 text-gray-200 rounded-lg hover:bg-gray-500 hover:text-white transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path

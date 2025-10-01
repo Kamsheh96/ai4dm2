@@ -16,18 +16,21 @@ export const DashboardHome: React.FC = () => {
         </p>
       </div>
 
-      {/* Top Row: Notifications and Assessments */}
+      {/* Main Content: Notifications and Assessments Side by Side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <NotificationWidget />
         <AssessmentsWidget />
       </div>
 
-      {/* Workstreams Section */}
-      <div className="section-divider"></div>
-      <WorkstreamGrid />
+      {/* Unified Workstreams and Context Panel */}
+      <div className="bg-gradient-to-br from-gray-800 via-gray-850 to-gray-800 rounded-3xl border border-gray-700 shadow-2xl p-8">
+        <WorkstreamGrid />
 
-      {/* Bottom Dashboard Panel */}
-      <DashboardBottomPanel />
+        {/* AI Context and Quick Actions Section */}
+        <div className="mt-8 pt-8 border-t border-gray-700">
+          <DashboardBottomPanel />
+        </div>
+      </div>
     </div>
   );
 };

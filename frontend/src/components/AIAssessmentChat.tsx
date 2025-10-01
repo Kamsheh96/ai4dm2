@@ -24,14 +24,26 @@ export const AIAssessmentChat: React.FC<AIAssessmentChatProps> = ({ onClose }) =
       {/* Header */}
       <div className="bg-gray-800 border-b border-gray-700 px-6 py-4">
         <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center space-x-3">
-              <h1 className="text-lg font-bold text-white">AI Agent - DQ Assessment PMO</h1>
-              <span className="px-3 py-1 bg-white text-gray-900 rounded-full text-xs font-semibold">
-                Active Context
-              </span>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={onClose}
+              className="hover:opacity-80 transition-opacity duration-200 cursor-pointer bg-gray-900 rounded-lg p-1"
+            >
+              <img
+                src="/logo.png"
+                alt="AI4DM Logo"
+                className="h-12 w-auto object-cover"
+              />
+            </button>
+            <div>
+              <div className="flex items-center space-x-3">
+                <h1 className="text-lg font-bold text-white">AI Agent - DQ Assessment PMO</h1>
+                <span className="px-3 py-1 bg-white text-gray-900 rounded-full text-xs font-semibold">
+                  Active Context
+                </span>
+              </div>
+              <p className="text-sm text-gray-400 mt-1">Section 3 Draft • Last edited 15 min ago</p>
             </div>
-            <p className="text-sm text-gray-400 mt-1">Section 3 Draft • Last edited 15 min ago</p>
           </div>
           <div className="flex items-center space-x-3">
             <button className="px-4 py-2 border border-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 text-sm font-medium">
