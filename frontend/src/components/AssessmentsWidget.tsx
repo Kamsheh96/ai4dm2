@@ -59,7 +59,7 @@ export const AssessmentsWidget: React.FC = () => {
   };
 
   return (
-    <div className="card-glass h-full">
+    <div className="bg-gray-800 rounded-2xl p-6 border border-gray-700 h-full">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
@@ -67,8 +67,8 @@ export const AssessmentsWidget: React.FC = () => {
             <span className="text-white text-xl">📅</span>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Upcoming Assessments</h2>
-            <span className="text-sm text-gray-600 font-medium">
+            <h2 className="text-xl font-bold text-white">Upcoming Assessments</h2>
+            <span className="text-sm text-gray-400 font-medium">
               {upcomingAssessments.length} due soon
             </span>
           </div>
@@ -79,11 +79,11 @@ export const AssessmentsWidget: React.FC = () => {
       <div className="space-y-3">
         {upcomingAssessments.length === 0 ? (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-100 flex items-center justify-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-700 flex items-center justify-center">
               <span className="text-3xl">🎯</span>
             </div>
-            <p className="text-gray-600 font-medium">All clear!</p>
-            <p className="text-sm text-gray-500 mt-1">No upcoming assessments</p>
+            <p className="text-gray-300 font-medium">All clear!</p>
+            <p className="text-sm text-gray-400 mt-1">No upcoming assessments</p>
           </div>
         ) : (
           upcomingAssessments.map((assessment, index) => {
@@ -93,19 +93,19 @@ export const AssessmentsWidget: React.FC = () => {
             return (
               <div
                 key={assessment.id}
-                className={`group relative p-4 rounded-2xl bg-white border border-gray-200 hover:shadow-soft hover:scale-[1.01] transition-all duration-200 animate-scale-in ${getPriorityColor(assessment.priority)}`}
+                className={`group relative p-4 rounded-2xl bg-gray-700 border border-gray-600 hover:shadow-soft hover:scale-[1.01] transition-all duration-200 animate-scale-in ${getPriorityColor(assessment.priority)}`}
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className="flex items-start space-x-3">
                   {/* Icon */}
-                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-accent-100 to-secondary-100 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-accent-500/20 to-secondary-500/20 flex items-center justify-center">
                     <span className="text-lg">{getAssessmentIcon(assessment.type)}</span>
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2 mb-2">
-                      <h4 className="font-semibold text-sm text-gray-900 leading-tight">
+                      <h4 className="font-semibold text-sm text-white leading-tight">
                         {assessment.title}
                       </h4>
                       <span className={`text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap ${statusBadge.className}`}>
@@ -115,16 +115,16 @@ export const AssessmentsWidget: React.FC = () => {
 
                     {/* Details */}
                     <div className="space-y-1.5 mb-3">
-                      <div className="flex items-center text-xs text-gray-600">
+                      <div className="flex items-center text-xs text-gray-300">
                         <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span className={`font-semibold ${isDueSoon ? 'text-error-600' : 'text-gray-700'}`}>
+                        <span className={`font-semibold ${isDueSoon ? 'text-error-400' : 'text-gray-200'}`}>
                           {formatDueDate(assessment.dueDate)}
                         </span>
                       </div>
 
-                      <div className="flex items-center text-xs text-gray-600">
+                      <div className="flex items-center text-xs text-gray-300">
                         <svg className="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -136,9 +136,9 @@ export const AssessmentsWidget: React.FC = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
                         <span className={`font-semibold ${
-                          assessment.priority === 'high' ? 'text-error-600' :
-                          assessment.priority === 'medium' ? 'text-warning-600' :
-                          'text-gray-600'
+                          assessment.priority === 'high' ? 'text-error-400' :
+                          assessment.priority === 'medium' ? 'text-warning-400' :
+                          'text-gray-300'
                         }`}>
                           {assessment.priority.charAt(0).toUpperCase() + assessment.priority.slice(1)} Priority
                         </span>
@@ -163,7 +163,7 @@ export const AssessmentsWidget: React.FC = () => {
                           Complete
                         </button>
                       )}
-                      <button className="text-xs px-3 py-1.5 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 font-semibold transition-colors duration-200">
+                      <button className="text-xs px-3 py-1.5 bg-gray-600 border border-gray-500 text-gray-200 rounded-lg hover:bg-gray-500 font-semibold transition-colors duration-200">
                         View Details
                       </button>
                     </div>
@@ -177,8 +177,8 @@ export const AssessmentsWidget: React.FC = () => {
 
       {/* View All Link */}
       {assessments.length > upcomingAssessments.length && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <button className="w-full py-2.5 text-sm font-semibold text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-xl transition-all duration-200">
+        <div className="mt-4 pt-4 border-t border-gray-700">
+          <button className="w-full py-2.5 text-sm font-semibold text-primary-400 hover:text-primary-300 hover:bg-gray-700 rounded-xl transition-all duration-200">
             View All Assessments ({assessments.length})
           </button>
         </div>

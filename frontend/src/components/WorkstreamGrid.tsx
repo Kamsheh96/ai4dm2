@@ -33,8 +33,8 @@ export const WorkstreamGrid: React.FC = () => {
   return (
     <div className="animate-fade-in animate-delay-200">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">My Workstreams</h2>
-        <p className="text-gray-600 text-lg leading-relaxed">
+        <h2 className="text-3xl font-bold text-white mb-2">My Workstreams</h2>
+        <p className="text-gray-300 text-lg leading-relaxed">
           Select a workstream to continue working with context-aware AI assistance
         </p>
       </div>
@@ -48,7 +48,7 @@ export const WorkstreamGrid: React.FC = () => {
             <button
               key={workstream.id}
               onClick={() => handleWorkstreamSelect(workstream)}
-              className={`group text-left card-interactive relative overflow-hidden animate-scale-in ${
+              className={`group text-left bg-gray-800 rounded-2xl p-6 border border-gray-700 hover:shadow-2xl hover:scale-[1.02] transition-all duration-200 relative overflow-hidden animate-scale-in ${
                 isSelected ? 'ring-4 ring-primary-500 ring-opacity-50' : ''
               }`}
               style={{ animationDelay: `${index * 50}ms` }}
@@ -67,7 +67,7 @@ export const WorkstreamGrid: React.FC = () => {
               {/* Card Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h3 className="font-bold text-gray-900 text-lg mb-2 group-hover:text-gradient-primary transition-all duration-200 pr-10">
+                  <h3 className="font-bold text-white text-lg mb-2 group-hover:text-primary-400 transition-all duration-200 pr-10">
                     {workstream.name}
                   </h3>
                   <span className={`inline-flex text-xs px-3 py-1.5 rounded-full font-semibold ${
@@ -83,7 +83,7 @@ export const WorkstreamGrid: React.FC = () => {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 leading-relaxed mb-4">
+              <p className="text-sm text-gray-300 leading-relaxed mb-4">
                 {workstream.description}
               </p>
 
@@ -91,10 +91,10 @@ export const WorkstreamGrid: React.FC = () => {
               {typeof workstream.progress === 'number' && (
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-gray-700">Progress</span>
-                    <span className="text-xs font-bold text-primary-600">{workstream.progress}%</span>
+                    <span className="text-xs font-semibold text-gray-400">Progress</span>
+                    <span className="text-xs font-bold text-primary-400">{workstream.progress}%</span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                  <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full transition-all duration-500 ease-out"
                       style={{ width: `${workstream.progress}%` }}
@@ -104,7 +104,7 @@ export const WorkstreamGrid: React.FC = () => {
               )}
 
               {/* Metadata */}
-              <div className="space-y-2 text-xs text-gray-600">
+              <div className="space-y-2 text-xs text-gray-300">
                 {workstream.owner && (
                   <div className="flex items-center">
                     <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,8 +121,8 @@ export const WorkstreamGrid: React.FC = () => {
                     </svg>
                     <span className={`font-semibold ${
                       deadline.includes('Overdue') || deadline.includes('today') || deadline.includes('tomorrow')
-                        ? 'text-error-600'
-                        : 'text-gray-700'
+                        ? 'text-error-400'
+                        : 'text-gray-300'
                     }`}>
                       {deadline}
                     </span>
@@ -131,7 +131,7 @@ export const WorkstreamGrid: React.FC = () => {
               </div>
 
               {/* Hover Effect Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 to-secondary-500/0 group-hover:from-primary-500/5 group-hover:to-secondary-500/5 transition-all duration-300 pointer-events-none rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 to-secondary-500/0 group-hover:from-primary-500/10 group-hover:to-secondary-500/10 transition-all duration-300 pointer-events-none rounded-3xl"></div>
             </button>
           );
         })}
@@ -139,16 +139,16 @@ export const WorkstreamGrid: React.FC = () => {
 
       {/* Active Workstream Indicator */}
       {selectedWorkstream && (
-        <div className="mt-6 p-4 rounded-2xl bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200 animate-slide-up">
+        <div className="mt-6 p-4 rounded-2xl bg-gradient-to-r from-primary-900/30 to-secondary-900/30 border border-primary-600 animate-slide-up">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center shadow-soft">
               <span className="text-white text-lg">✓</span>
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900">
+              <p className="text-sm font-semibold text-white">
                 Active Context: {WORKSTREAMS.find(w => w.id === selectedWorkstream)?.name}
               </p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-gray-300">
                 AI agent will use this workstream context for all interactions
               </p>
             </div>

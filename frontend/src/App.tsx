@@ -45,9 +45,9 @@ const AppContent: React.FC = () => {
   const hasStartedChat = messages.length > 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/20">
-      {/* Premium Header with Glass Effect and Navigation */}
-      <header className="glass sticky top-0 z-40 border-b border-white/20 shadow-soft">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      {/* Premium Header with Dark Theme and Navigation */}
+      <header className="bg-gray-800 sticky top-0 z-40 border-b border-gray-700 shadow-2xl">
         <div className="safe-max-width safe-padding py-6">
           <div className="flex items-center justify-between">
             <button
@@ -68,7 +68,7 @@ const AppContent: React.FC = () => {
                 className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
                   currentView === 'dashboard'
                     ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-soft'
-                    : 'bg-white/50 text-gray-700 hover:bg-white hover:shadow-soft'
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
                 }`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +87,7 @@ const AppContent: React.FC = () => {
                 className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
                   currentView === 'chat'
                     ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-soft'
-                    : 'bg-white/50 text-gray-700 hover:bg-white hover:shadow-soft'
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
                 }`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,7 +101,7 @@ const AppContent: React.FC = () => {
                 className={`px-4 py-2.5 min-h-[44px] rounded-2xl font-semibold transition-all duration-200 flex items-center space-x-2 ${
                   currentView === 'knowledge-base'
                     ? 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white shadow-soft'
-                    : 'bg-white/50 text-gray-700 hover:bg-white hover:shadow-soft'
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
                 }`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@ const AppContent: React.FC = () => {
 
               <button
                 onClick={() => setCurrentView('settings')}
-                className="p-2.5 min-h-[44px] min-w-[44px] rounded-2xl text-gray-700 hover:bg-white hover:shadow-soft transition-all duration-200"
+                className="p-2.5 min-h-[44px] min-w-[44px] rounded-2xl bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-all duration-200"
                 title="Settings"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,7 +121,7 @@ const AppContent: React.FC = () => {
                 </svg>
               </button>
 
-              <span className="text-sm text-gray-500 font-medium hidden md:inline ml-4">v2.0.0</span>
+              <span className="text-sm text-gray-400 font-medium hidden md:inline ml-4">v2.0.0</span>
             </nav>
           </div>
         </div>

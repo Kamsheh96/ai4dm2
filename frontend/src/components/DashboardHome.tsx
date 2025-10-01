@@ -10,8 +10,8 @@ export const DashboardHome: React.FC = () => {
     <div className="space-y-8 animate-fade-in">
       {/* Dashboard Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-lg text-gray-600 leading-relaxed">
+        <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
+        <p className="text-lg text-gray-300 leading-relaxed">
           Welcome back! Here's what's happening with your data management work.
         </p>
       </div>
