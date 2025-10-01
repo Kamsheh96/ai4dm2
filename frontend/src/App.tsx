@@ -9,12 +9,13 @@ import { ToolsModal } from '@components/ToolsModal';
 import { OutputDisplay } from '@components/OutputDisplay';
 import { DashboardHome } from '@components/DashboardHome';
 import { KnowledgeBaseManager } from '@components/KnowledgeBaseManager';
+import { ProfileSettings } from '@components/ProfileSettings';
 import type { FileItem, ProcessedFile } from '@domain/models';
 import { useToast } from '@hooks/useToast';
 import { useChat } from '@hooks/useChat';
 import { useDashboard } from '@hooks/useDashboard';
 
-type View = 'dashboard' | 'chat' | 'knowledge-base';
+type View = 'dashboard' | 'chat' | 'knowledge-base' | 'settings';
 
 const AppContent: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useState<FileItem[]>([]);
@@ -49,15 +50,16 @@ const AppContent: React.FC = () => {
       <header className="glass sticky top-0 z-40 border-b border-white/20 shadow-soft">
         <div className="safe-max-width safe-padding py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 flex items-center justify-center shadow-medium">
-                <span className="text-white font-bold text-xl">AI</span>
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gradient">AI4DM</h1>
-                <p className="text-sm text-gray-600 mt-0.5 font-medium">AI Agents for Data Management</p>
-              </div>
-            </div>
+            <button
+              onClick={() => setCurrentView('dashboard')}
+              className="hover:opacity-80 transition-opacity duration-200 cursor-pointer bg-gray-900 rounded-lg p-1"
+            >
+              <img
+                src="/logo.png"
+                alt="AI4DM Logo"
+                className="h-24 w-auto object-cover"
+              />
+            </button>
 
             {/* Navigation */}
             <nav className="flex items-center space-x-2">
@@ -108,43 +110,59 @@ const AppContent: React.FC = () => {
                 <span className="hidden sm:inline">Knowledge Bases</span>
               </button>
 
+              <button
+                onClick={() => setCurrentView('settings')}
+                className="p-2.5 min-h-[44px] min-w-[44px] rounded-2xl text-gray-700 hover:bg-white hover:shadow-soft transition-all duration-200"
+                title="Settings"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+
               <span className="text-sm text-gray-500 font-medium hidden md:inline ml-4">v2.0.0</span>
             </nav>
           </div>
         </div>
       </header>
 
+      {/* Settings View (Full Screen Overlay) */}
+      {currentView === 'settings' && <ProfileSettings onClose={() => setCurrentView('dashboard')} />}
+
       {/* Main Content with Generous Spacing */}
-      <div className="safe-max-width safe-padding py-12">
-        {/* Dashboard View */}
-        {currentView === 'dashboard' && <DashboardHome />}
+      {currentView !== 'settings' && (
+        <div className="safe-max-width safe-padding py-12">
+          {/* Dashboard View */}
+          {currentView === 'dashboard' && <DashboardHome />}
 
-        {/* Chat View */}
-        {currentView === 'chat' && (
-          <>
-            <div className="mb-12 animate-fade-in">
-              <ChatWorkspace
-                uploadedFiles={uploadedFiles}
-                onFilesAdded={handleFilesAdded}
-                onFileRemove={handleFileRemove}
-              />
-            </div>
-
-            {hasStartedChat && (
-              <div className="mt-8 animate-slide-up">
-                <OutputDisplay
-                  files={outputFiles}
-                  onDownload={handleDownload}
-                  onDownloadAll={handleDownloadAll}
+          {/* Chat View */}
+          {currentView === 'chat' && (
+            <>
+              <div className="mb-12 animate-fade-in">
+                <ChatWorkspace
+                  uploadedFiles={uploadedFiles}
+                  onFilesAdded={handleFilesAdded}
+                  onFileRemove={handleFileRemove}
                 />
               </div>
-            )}
-          </>
-        )}
 
-        {/* Knowledge Base View */}
-        {currentView === 'knowledge-base' && <KnowledgeBaseManager />}
-      </div>
+              {hasStartedChat && (
+                <div className="mt-8 animate-slide-up">
+                  <OutputDisplay
+                    files={outputFiles}
+                    onDownload={handleDownload}
+                    onDownloadAll={handleDownloadAll}
+                  />
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Knowledge Base View */}
+          {currentView === 'knowledge-base' && <KnowledgeBaseManager />}
+        </div>
+      )}
 
       {/* Modals and Overlays */}
       <ToolsModal />

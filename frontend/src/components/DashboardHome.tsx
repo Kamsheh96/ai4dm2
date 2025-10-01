@@ -2,6 +2,7 @@ import React from 'react';
 import { NotificationWidget } from './NotificationWidget';
 import { AssessmentsWidget } from './AssessmentsWidget';
 import { WorkstreamGrid } from './WorkstreamGrid';
+import { DashboardBottomPanel } from './DashboardBottomPanel';
 
 export const DashboardHome: React.FC = () => {
 
@@ -24,6 +25,9 @@ export const DashboardHome: React.FC = () => {
       {/* Workstreams Section */}
       <div className="section-divider"></div>
       <WorkstreamGrid />
+
+      {/* Bottom Dashboard Panel */}
+      <DashboardBottomPanel />
     </div>
   );
 };

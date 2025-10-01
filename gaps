@@ -1,0 +1,1073 @@
+Epic 1: Dashboard Main View Enhancement
+User Story 1.1: Complete Dashboard Layout and Welcome Section
+As a Data Quality Manager
+I want a comprehensive dashboard with proper layout and welcome messaging
+So that I can quickly understand my data management work status and navigate the platform effectively
+Acceptance Criteria:
+
+Dashboard displays "Dashboard" as the main heading (large, bold)
+Welcome message reads: "Welcome back! Here's what's happening with your data management work."
+Top navigation bar includes:
+
+AI4DM logo with tagline "AI Agents for Data Management" (left-aligned)
+Dashboard button (active/selected state with home icon)
+Chat button with icon
+Knowledge Bases button with icon
+Version number "v2.0.0" (right-aligned)
+
+
+Navigation buttons use gradient styling (blue to purple)
+Dashboard content area is properly spaced with white/light background
+
+Main Flow:
+
+User logs into AI4DM platform
+System displays Dashboard as default landing page
+Dashboard loads with all components visible
+User sees welcome message at top
+User can access all navigation options from top bar
+
+Alternative Flow:
+
+If user arrives from another section, Dashboard button shows active state
+If no data available, system displays appropriate empty state messages
+
+Tasks and Subtasks:
+Task 1.1.1: Implement Dashboard Header Section
+
+Subtask 1: Add "Dashboard" h1 heading with proper typography (font-size: 48-56px, font-weight: bold)
+Subtask 2: Add welcome message as subtitle (font-size: 18-20px, gray color)
+Subtask 3: Ensure proper spacing between heading and content (margin-bottom: 32-40px)
+Subtask 4: Test responsive behavior on different screen sizes
+
+Task 1.1.2: Build Top Navigation Bar
+
+Subtask 1: Create navigation container with proper height (64-72px)
+Subtask 2: Implement AI4DM logo component with purple gradient background
+Subtask 3: Add "AI Agents for Data Management" tagline below logo
+Subtask 4: Create Dashboard button with home icon and active state styling
+Subtask 5: Create Chat button with message icon
+Subtask 6: Create Knowledge Bases button with book icon
+Subtask 7: Add version number display on far right
+Subtask 8: Apply gradient styling (blue #2196F3 to purple #9C27B0) to active navigation button
+Subtask 9: Implement hover states for all navigation buttons
+Subtask 10: Test navigation functionality and active state management
+
+
+User Story 1.2: Notifications Panel Implementation
+As a Data Quality Manager
+I want a comprehensive notifications panel on my dashboard
+So that I can stay informed about important updates, deadlines, and requests
+Acceptance Criteria:
+
+Notifications panel displays on left side of dashboard
+Panel header shows "Notifications" title with bell icon
+Unread count displays prominently (e.g., "1 unread")
+"Clear All" button appears in top-right of panel
+Each notification card shows:
+
+Appropriate icon (email, chart, bell, etc.)
+Notification title
+Description text
+Sender/source name
+Timestamp (e.g., "2h ago")
+Priority badge (HIGH, MEDIUM) with color coding
+
+
+Notifications are properly ordered by priority and timestamp
+Selected/active notification has visible left border highlight
+Minimum 3-4 notification cards visible
+
+Main Flow:
+
+User views dashboard
+System displays notifications panel on left side
+User sees unread count at top
+User can scroll through notifications
+User can click individual notifications to view details
+User can clear all notifications via button
+
+Alternative Flow:
+
+If no unread notifications, show "0 unread" or hide count
+If no notifications exist, show empty state message
+If notification clicked, mark as read and update count
+
+Tasks and Subtasks:
+Task 1.2.1: Create Notifications Panel Container
+
+Subtask 1: Design panel with white background and subtle border
+Subtask 2: Set fixed width (approximately 600-650px)
+Subtask 3: Add proper padding (24-32px)
+Subtask 4: Implement rounded corners (8-12px border-radius)
+Subtask 5: Add subtle shadow for depth
+
+Task 1.2.2: Build Notifications Header
+
+Subtask 1: Create header section with bell icon (blue/purple color)
+Subtask 2: Add "Notifications" title (font-size: 24-28px, font-weight: 600)
+Subtask 3: Implement unread counter badge (blue text, small font)
+Subtask 4: Add "Clear All" button (right-aligned, gray text with hover state)
+Subtask 5: Ensure proper spacing between elements
+
+Task 1.2.3: Implement Individual Notification Cards
+
+Subtask 1: Create notification card component with proper layout
+Subtask 2: Add icon container (left side, 40x40px, with background color matching notification type)
+Subtask 3: Implement notification title (font-size: 16-18px, font-weight: 600)
+Subtask 4: Add description text (font-size: 14px, gray color, line-height: 1.5)
+Subtask 5: Create sender/timestamp footer (font-size: 12-13px, lighter gray)
+Subtask 6: Add priority badge (HIGH: red background, MEDIUM: orange background)
+Subtask 7: Implement left border highlight for selected state (4px solid, blue)
+Subtask 8: Add hover effect (slight background color change)
+Subtask 9: Set card spacing (margin-bottom: 12-16px)
+
+Task 1.2.4: Populate Notification Content
+
+Subtask 1: Add "New Email from PMO Director" notification (HIGH priority, email icon, 2h ago)
+
+Description: "Review of Q4 data quality metrics requested"
+
+
+Subtask 2: Add "DQ Assessment Due Soon" notification (HIGH priority, chart icon, 1d ago, with left highlight)
+
+Description: "PMO Data Quality Assessment due in 7 days"
+
+
+Subtask 3: Add "Workstream Progress Update" notification (MEDIUM priority, bell icon, 3d ago)
+
+Description: "Data Strategy Document reached 30% completion"
+
+
+Subtask 4: Add additional notifications as needed
+Subtask 5: Ensure proper icon selection for each notification type
+
+Task 1.2.5: Implement Notification Functionality
+
+Subtask 1: Create click handler for individual notifications
+Subtask 2: Implement "Clear All" functionality
+Subtask 3: Add mark as read functionality
+Subtask 4: Update unread counter dynamically
+Subtask 5: Add notification priority sorting logic
+Subtask 6: Implement timestamp sorting as secondary sort
+
+
+User Story 1.3: Upcoming Assessments Panel Implementation
+As a Data Quality Manager
+I want an upcoming assessments panel on my dashboard
+So that I can track upcoming deadlines, priorities, and assessment statuses
+Acceptance Criteria:
+
+Upcoming Assessments panel displays on right side of dashboard
+Panel header shows "Upcoming Assessments" with calendar icon
+Count of due items displays (e.g., "3 due soon")
+Each assessment card shows:
+
+Appropriate icon (chart, checkmark, governance icon)
+Assessment title
+Due date with calendar icon (e.g., "Due in 1 weeks")
+Assignee with user icon (shows "Current User")
+Priority with icon (High Priority: red, Medium Priority: orange)
+Status badge (In Progress: blue, Not Started: yellow)
+
+
+Assessment cards are properly spaced and organized
+At least 3 assessment cards visible
+One assessment has golden/yellow highlight border
+
+Main Flow:
+
+User views dashboard
+System displays upcoming assessments on right side
+User sees count of assessments due soon
+User can view details of each assessment
+User can click assessment to view full details
+User sees visual priority and status indicators
+
+Alternative Flow:
+
+If no upcoming assessments, show empty state
+If assessment clicked, navigate to assessment detail view
+If assessment overdue, show different styling
+
+Tasks and Subtasks:
+Task 1.3.1: Create Upcoming Assessments Panel Container
+
+Subtask 1: Design panel with white background and subtle border
+Subtask 2: Set appropriate width (approximately 600-650px)
+Subtask 3: Add proper padding (24-32px)
+Subtask 4: Implement rounded corners (8-12px border-radius)
+Subtask 5: Add subtle shadow for depth
+Subtask 6: Position on right side of dashboard, aligned with notifications panel
+
+Task 1.3.2: Build Assessments Header
+
+Subtask 1: Create header section with calendar icon (purple/pink color)
+Subtask 2: Add "Upcoming Assessments" title (font-size: 24-28px, font-weight: 600)
+Subtask 3: Add "3 due soon" counter below title (font-size: 14px, gray color)
+Subtask 4: Ensure proper spacing
+
+Task 1.3.3: Implement Individual Assessment Cards
+
+Subtask 1: Create assessment card component with proper layout
+Subtask 2: Add icon container (left side, with background color)
+Subtask 3: Implement assessment title (font-size: 16-18px, font-weight: 600, right side)
+Subtask 4: Add status badge (top-right, rounded pill shape)
+
+"In Progress": blue background (#2196F3)
+"Not Started": yellow/orange background (#FFA726)
+
+
+Subtask 5: Create metadata row with icons:
+
+Calendar icon + due date text
+User icon + assignee text
+Priority icon + priority text
+
+
+Subtask 6: Style metadata items (font-size: 13-14px, gray color)
+Subtask 7: Add proper card padding (20-24px)
+Subtask 8: Set card spacing (margin-bottom: 16-20px)
+Subtask 9: Implement hover effect
+Subtask 10: Add border for special highlighted card (golden/orange, 2-3px solid)
+
+Task 1.3.4: Populate Assessment Content
+
+Subtask 1: Add "PMO Data Quality Assessment" card
+
+Icon: Bar chart (pink/purple background)
+Status: In Progress (blue badge)
+Due: Due in 1 weeks
+Assignee: Current User
+Priority: High Priority (red text with icon)
+
+
+Subtask 2: Add "GDPR Compliance Review" card
+
+Icon: Checkmark (green background)
+Status: Not Started (yellow badge)
+Due: Due in 2 weeks
+Assignee: Current User
+Priority: High Priority (red text with icon)
+
+
+Subtask 3: Add "Data Governance Framework Review" card (with golden border highlight)
+
+Icon: Governance/building icon (purple background)
+Status: Not Started (yellow badge)
+Due: Due in 3 weeks
+Assignee: Current User
+Priority: Medium Priority (orange text with icon)
+
+
+Subtask 4: Ensure proper icon selection and styling for each
+
+Task 1.3.5: Implement Assessment Card Functionality
+
+Subtask 1: Add click handler to navigate to assessment details
+Subtask 2: Implement status color coding logic
+Subtask 3: Add priority color coding logic
+Subtask 4: Create dynamic due date calculation
+Subtask 5: Implement sort by due date
+Subtask 6: Add filter capability (if needed)
+
+
+Epic 2: Profile Settings Enhancement
+User Story 2.1: Complete Profile Settings Page
+As a Data Quality Manager
+I want a comprehensive profile settings page
+So that I can view and manage my account information, workstreams, tools, and integrations
+Acceptance Criteria:
+
+Profile Settings page accessible from navigation
+Page title: "Profile Settings"
+Subtitle: "Manage your account and preferences"
+User profile card displays:
+
+Circular avatar with initials "DM"
+Name: "Sarah Chen"
+Role: "Data Quality Manager"
+Email: "sarah.chen@company.com"
+"Edit Profile" button (top-right)
+
+
+Four statistics cards visible:
+
+Active Workstreams: 3 (with description: "2 in progress, 1 planning")
+Tools Installed: 8 (with description: "12 available to add")
+Connected Sources: 4 (with description: "SharePoint, Email, Drive")
+Agent Interactions: 247 (with description: "This month")
+
+
+Account Details section displays:
+
+Department: Data Management Office
+Role: Data Quality Manager
+Access Level: Manager
+Account Status: Active (green badge)
+Member Since: Jan 2024
+
+
+Dark theme styling throughout
+Left sidebar with navigation options
+
+Main Flow:
+
+User clicks Profile or Settings from main navigation
+System displays Profile Settings page
+User views their profile information
+User sees statistics about their usage
+User can edit profile via button
+User can navigate to other settings sections via sidebar
+
+Alternative Flow:
+
+If profile incomplete, show warnings
+If clicked from notification, highlight relevant section
+
+Tasks and Subtasks:
+Task 2.1.1: Create Profile Settings Page Layout
+
+Subtask 1: Design dark theme container (background: #1e1e1e or similar)
+Subtask 2: Implement "Settings & Tools Management" header bar with close button
+Subtask 3: Create two-column layout (sidebar + main content)
+Subtask 4: Add proper padding and spacing
+Subtask 5: Test responsive behavior
+
+Task 2.1.2: Build Left Sidebar Navigation
+
+Subtask 1: Create sidebar container (fixed width: 200-220px)
+Subtask 2: Add navigation items with icons:
+
+Profile (person icon)
+Tools Collection (wrench icon)
+Knowledge Bases (book icon)
+Integrations (link icon)
+Notifications (bell icon)
+Preferences (gear icon)
+
+
+Subtask 3: Implement active state styling (Profile selected by default)
+Subtask 4: Add hover effects
+Subtask 5: Style icons with appropriate colors
+
+Task 2.1.3: Create Profile Header Section
+
+Subtask 1: Add "Profile Settings" title (font-size: 32-36px, white color)
+Subtask 2: Add "Manage your account and preferences" subtitle (font-size: 16px, gray color)
+Subtask 3: Ensure proper spacing (margin-bottom: 32px)
+
+Task 2.1.4: Implement User Profile Card
+
+Subtask 1: Create card container with dark background (#2a2a2a or similar)
+Subtask 2: Add circular avatar (80-100px diameter)
+
+Display "DM" initials in center
+Use light background color
+Center text
+
+
+Subtask 3: Add user information section:
+
+Name: "Sarah Chen" (font-size: 24-28px, font-weight: 600, white)
+Role: "Data Quality Manager" (font-size: 16-18px, gray)
+Email: "sarah.chen@company.com" (font-size: 14px, lighter gray)
+
+
+Subtask 4: Add "Edit Profile" button (top-right, outlined style, white border)
+Subtask 5: Implement proper card padding (24-32px)
+Subtask 6: Add rounded corners (8-12px)
+
+Task 2.1.5: Create Statistics Cards Grid
+
+Subtask 1: Create 2x2 grid layout for four cards
+Subtask 2: Set proper spacing between cards (gap: 16-20px)
+Subtask 3: For each card:
+
+Dark background (#2a2a2a)
+Rounded corners
+Padding (20-24px)
+Header text (light gray, 14px)
+Large number (36-48px, bold, colored)
+Description text (14px, gray, below number)
+
+
+
+Task 2.1.6: Populate Active Workstreams Card
+
+Subtask 1: Add "Active Workstreams" header
+Subtask 2: Display number "3" in large font
+Subtask 3: Add description: "2 in progress, 1 planning"
+Subtask 4: Use default white color for number
+
+Task 2.1.7: Populate Tools Installed Card
+
+Subtask 1: Add "Tools Installed" header
+Subtask 2: Display number "8" in large font
+Subtask 3: Add description: "12 available to add"
+Subtask 4: Use default white color for number
+
+Task 2.1.8: Populate Connected Sources Card
+
+Subtask 1: Add "Connected Sources" header
+Subtask 2: Display number "4" in large font (use orange/red color: #FF5252)
+Subtask 3: Add description: "SharePoint, Email, Drive"
+
+Task 2.1.9: Populate Agent Interactions Card
+
+Subtask 1: Add "Agent Interactions" header
+Subtask 2: Display number "247" in large font (use purple color: #9C27B0)
+Subtask 3: Add description: "This month"
+
+Task 2.1.10: Create Account Details Section
+
+Subtask 1: Add "Account Details" section header (font-size: 20-24px, white)
+Subtask 2: Create dark background container (#2a2a2a)
+Subtask 3: Add proper padding (24-32px)
+Subtask 4: Implement two-column layout for labels and values
+Subtask 5: Add all account details rows:
+
+Department: Data Management Office (right-aligned, white)
+Role: Data Quality Manager (right-aligned, white)
+Access Level: Manager (right-aligned, light badge/pill)
+Account Status: Active (right-aligned, green badge)
+Member Since: Jan 2024 (right-aligned, white)
+
+
+Subtask 6: Style labels (left-aligned, gray, 14-15px)
+Subtask 7: Style values (right-aligned, white/colored, 14-15px)
+Subtask 8: Add spacing between rows (16-20px)
+
+Task 2.1.11: Implement Status Badges
+
+Subtask 1: Create "Manager" badge (light gray background, rounded)
+Subtask 2: Create "Active" badge (green background #4CAF50, rounded)
+Subtask 3: Ensure proper padding and font size for badges
+
+
+Epic 3: AI Agent Chat Interface Enhancement
+User Story 3.1: Complete AI Agent Context Chat Interface
+As a Data Quality Manager
+I want an AI agent chat interface with active context management
+So that I can collaborate with the AI on my assessment work with full context awareness
+Acceptance Criteria:
+
+Chat interface displays with proper header:
+
+Title: "AI Agent - DQ Assessment PMO"
+Document context: "Section 3 Draft • Last edited 15 min ago"
+"Active Context" badge (white, rounded)
+"Change" button (right side)
+
+
+AI welcome message displays:
+
+"Welcome back! I've loaded your PMO Data Quality Assessment context. You were working on Section 3: Data Governance Framework."
+"Current progress: 65% complete. Would you like to continue where you left off?"
+
+
+User message displays in dark bubble (right-aligned):
+
+"Yes, let's continue with Section 3. Can you show me what we have so far?"
+
+
+AI response shows Section 3 content in detailed card format:
+
+Section number and title
+Key components in bullet points
+Key findings text
+"Draft - Section Incomplete" status badge (red, at bottom)
+
+
+Action options displayed at bottom:
+
+"Continue Draft" button (left)
+"Agent Send" toggle (right, with radio button)
+
+
+Suggested Actions section with four buttons:
+
+"Add Metrics Table" (with table icon)
+"Review SharePoint Docs" (with document icon)
+"Generate Recommendations" (with lightbulb icon)
+"Create Summary" (with document icon)
+
+
+Message input box at bottom with "Ask about this assessment or continue drafting..." placeholder
+"Send" button (right side of input)
+
+Main Flow:
+
+User clicks to open chat interface for assessment
+System loads AI Agent chat with active context
+AI displays welcome message with context information
+User responds to continue work
+AI shows current section content
+User sees suggested actions and can choose next steps
+User can type new messages or select suggested actions
+
+Alternative Flow:
+
+If no active context, prompt user to select workstream
+If context changed, show update notification
+If draft auto-saved, show notification
+
+Tasks and Subtasks:
+Task 3.1.1: Create Chat Interface Container
+
+Subtask 1: Design dark theme chat container (background: #1e1e1e)
+Subtask 2: Set full viewport height layout
+Subtask 3: Create three sections: header, messages area, input area
+Subtask 4: Add proper spacing and padding
+
+Task 3.1.2: Build Chat Header
+
+Subtask 1: Create header bar with dark gray background (#2a2a2a)
+Subtask 2: Add title "AI Agent - DQ Assessment PMO" (font-size: 16-18px, white)
+Subtask 3: Add subtitle "Section 3 Draft • Last edited 15 min ago" (font-size: 13px, gray)
+Subtask 4: Add "Active Context" badge (left side, white background, rounded, small)
+Subtask 5: Add "Change" button (right side, outlined, white border)
+Subtask 6: Ensure proper header height (60-72px)
+
+Task 3.1.3: Implement AI Welcome Message Bubble
+
+Subtask 1: Create message bubble component (left-aligned, light background)
+Subtask 2: Add message text:
+
+"Welcome back! I've loaded your PMO Data Quality Assessment context. You were working on Section 3: Data Governance Framework."
+"Current progress: 65% complete. Would you like to continue where you left off?"
+
+
+Subtask 3: Set proper bubble styling:
+
+Light background (#f5f5f5 or similar)
+Rounded corners (12-16px)
+Padding (16-20px)
+Max width (70-75% of container)
+Line height (1.5-1.6)
+
+
+Subtask 4: Add spacing below (16-20px margin-bottom)
+
+Task 3.1.4: Implement User Message Bubble
+
+Subtask 1: Create user message bubble (right-aligned, dark background)
+Subtask 2: Add message text: "Yes, let's continue with Section 3. Can you show me what we have so far?"
+Subtask 3: Set proper bubble styling:
+
+Dark background (#2a2a2a or similar)
+Rounded corners (12-16px)
+Padding (16-20px)
+Max width (70-75% of container)
+White text
+Right-aligned
+
+
+Subtask 4: Add spacing (16-20px margin)
+
+Task 3.1.5: Create Section Content Display Card
+
+Subtask 1: Design large content card with light background
+Subtask 2: Add section header:
+
+"Here's Section 3 of your assessment:" (gray text above card)
+
+
+Subtask 3: Create dark content box within card:
+
+Black/very dark background
+White text
+Proper padding (24-32px)
+Rounded corners
+
+
+Subtask 4: Add section title "3. Data Governance Framework" (white, bold, font-size: 18-20px)
+Subtask 5: Add governance description paragraph
+Subtask 6: Add bullet points list:
+
+"Data Stewardship roles assigned across 5 business units"
+"Monthly Data Quality Council meetings"
+"Established escalation procedures for critical issues"
+"Quarterly metrics reporting to executive leadership"
+
+
+Subtask 7: Add key findings text
+Subtask 8: Add "Draft - Section Incomplete" badge at bottom:
+
+Red/pink background (#FF5252)
+White text
+Rounded
+Padding (8px 16px)
+
+
+
+Task 3.1.6: Implement Action Controls
+
+Subtask 1: Create action controls row below content card
+Subtask 2: Add "Continue Draft" button (left side):
+
+Light gray text
+No background
+Underlined or plain style
+
+
+Subtask 3: Add "Agent Send" toggle (right side):
+
+Radio button style
+Label "Agent Send"
+Light gray when inactive
+
+
+Subtask 4: Add proper spacing between controls
+
+Task 3.1.7: Create Suggested Actions Section
+
+Subtask 1: Add "Suggested Actions" label (centered, gray text, small font)
+Subtask 2: Create four action buttons in 2x2 grid:
+
+Dark background (#2a2a2a)
+White text
+Icon + text layout
+Rounded borders
+Hover effect
+
+
+Subtask 3: Add "Add Metrics Table" button (table icon)
+Subtask 4: Add "Review SharePoint Docs" button (document icon)
+Subtask 5: Add "Generate Recommendations" button (lightbulb icon)
+Subtask 6: Add "Create Summary" button (document icon)
+Subtask 7: Set proper grid spacing (12-16px gap)
+Subtask 8: Ensure buttons are equal width
+
+Task 3.1.8: Build Message Input Area
+
+Subtask 1: Create fixed bottom input container
+Subtask 2: Add text input field:
+
+Placeholder: "Ask about this assessment or continue drafting..."
+Dark background
+White text
+Rounded corners (left side)
+Proper padding (12-16px)
+Full width minus send button
+
+
+Subtask 3: Add "Send" button:
+
+Right side of input
+Dark background
+White text
+Rounded corners (right side)
+Fixed width (80-100px)
+
+
+Subtask 4: Ensure input area sticks to bottom
+Subtask 5: Add proper height (56-64px)
+
+Task 3.1.9: Implement Chat Scrolling Behavior
+
+Subtask 1: Make messages area scrollable
+Subtask 2: Auto-scroll to bottom when new message added
+Subtask 3: Add scroll indicators if needed
+Subtask 4: Ensure proper spacing for all messages
+
+Task 3.1.10: Add Chat Functionality
+
+Subtask 1: Implement send message handler
+Subtask 2: Add message to chat history
+Subtask 3: Create typing indicator (optional)
+Subtask 4: Handle suggested action button clicks
+Subtask 5: Implement context change functionality
+Subtask 6: Add draft auto-save behavior
+
+
+Epic 4: Notifications Center Enhancement
+User Story 4.1: Complete Notifications Center Modal
+As a Data Quality Manager
+I want a comprehensive notifications center
+So that I can view, filter, and manage all my notifications in one place
+Acceptance Criteria:
+
+Notifications Center opens as modal overlay
+Modal header displays:
+
+"Notifications Center" title
+Close button (X, top-right)
+
+
+Notifications header shows:
+
+"All Notifications" title
+"5 unread messages" count
+"Mark all read" button (right side)
+
+
+Filter tabs available:
+
+All (active by default)
+Emails
+Assessments
+System
+
+
+Notification cards display with proper styling and information
+Each notification shows appropriate action buttons
+Notifications grouped/sorted properly
+
+Main Flow:
+
+User clicks notifications icon or link
+System opens Notifications Center modal
+User sees all notifications with count
+User can filter by category tabs
+User can view details of each notification
+User can take actions on notifications
+User can mark all as read
+User closes modal
+
+Alternative Flow:
+
+If no notifications, show empty state
+If filtered category empty, show empty state for that tab
+
+Tasks and Subtasks:
+Task 4.1.1: Create Notifications Center Modal
+
+Subtask 1: Design modal overlay with semi-transparent dark background
+Subtask 2: Create modal container (centered, appropriate width: 900-1000px)
+Subtask 3: Set modal height (80-90vh with scrolling)
+Subtask 4: Add dark background (#1e1e1e) to modal content
+Subtask 5: Implement rounded corners (12-16px)
+Subtask 6: Add proper padding (24-32px)
+Subtask 7: Create close functionality (click outside or X button)
+
+Task 4.1.2: Build Modal Header
+
+Subtask 1: Add "Notifications Center" title (top-left, gray, small font)
+Subtask 2: Add close button (X icon, top-right, gray, hover effect)
+Subtask 3: Ensure proper header padding (bottom: 16-20px)
+
+Task 4.1.3: Create Notifications Header Section
+
+Subtask 1: Add "All Notifications" title (font-size: 28-32px, white, bold)
+Subtask 2: Add "5 unread messages" count (font-size: 14-15px, gray)
+Subtask 3: Add "Mark all read" button (right-aligned, gray text, hover underline)
+Subtask 4: Ensure proper spacing below (20-24px)
+
+Task 4.1.4: Implement Filter Tabs
+
+Subtask 1: Create tab container
+Subtask 2: Add four tabs: All, Emails, Assessments, System
+Subtask 3: Style inactive tabs (gray text, no background)
+Subtask 4: Style active tab "All" (white text, underline or bottom border)
+Subtask 5: Add hover effects for tabs
+Subtask 6: Implement tab switching functionality
+Subtask 7: Add proper spacing (margin-bottom: 24px)
+
+Task 4.1.5: Create Notification Card Component
+
+Subtask 1: Design card with dark background (#2a2a2a)
+Subtask 2: Create three-column layout: icon | content | timestamp
+Subtask 3: Set proper card padding (20-24px)
+Subtask 4: Add rounded corners (8px)
+Subtask 5: Implement card spacing (margin-bottom: 16px)
+Subtask 6: Add left border for highlighted cards (3-4px, colored)
+
+Task 4.1.6: Build "PMO Review Request" Notification
+
+Subtask 1: Add email icon (blue circle background)
+Subtask 2: Add title "PMO Review Request" (white, font-size: 16-18px, bold)
+Subtask 3: Add description: "John Smith requested review of Q4 data quality assessment report. Please provide feedback by Oct 2."
+Subtask 4: Add action buttons:
+
+"Open Email" (white background button)
+"Dismiss" (gray text button)
+
+
+Subtask 5: Add timestamp "2h ago" (top-right, gray, 13px)
+Subtask 6: Add left border highlight (blue, 3-4px)
+
+Task 4.1.7: Build "Assessment Due Tomorrow" Notification
+
+Subtask 1: Add chart/assessment icon (colorful background)
+Subtask 2: Add title "Assessment Due Tomorrow" (white, font-size: 16-18px, bold)
+Subtask 3: Add description: "Finance DQ Assessment deadline: Oct 1, 2025. Current completion: 85%"
+Subtask 4: Add action buttons:
+
+"Continue Assessment" (red/pink background button)
+"Snooze" (gray text button)
+
+
+Subtask 5: Add timestamp "5h ago" (top-right, gray, 13px)
+Subtask 6: Add left border highlight (red/pink, 3-4px)
+
+Task 4.1.8: Build "Training Session Completed" Notification
+
+Subtask 1: Add checkmark icon (green circle background)
+Subtask 2: Add title "Training Session Completed" (white, font-size: 16-18px, bold)
+Subtask 3: Add description: "Data Quality Fundamentals - 24 attendees. Feedback survey responses: 22/24 submitted."
+Subtask 4: Add action button:
+
+"View Results" (gray text button)
+
+
+Subtask 5: Add timestamp "1d ago" (top-right, gray, 13px)
+Subtask 6: No border highlight
+
+Task 4.1.9: Build "Draft Auto-Saved" Notification
+
+Subtask 1: Add document icon (light background)
+Subtask 2: Add title "Draft Auto-Saved" (white, font-size: 16-18px, bold)
+Subtask 3: Add description: "Your work on 'DQ Strategy Section 3' has been automatically saved."
+Subtask 4: No action buttons needed
+Subtask 5: Add timestamp "1d ago" (top-right, gray, 13px)
+Subtask 6: No border highlight
+
+Task 4.1.10: Build "SharePoint Connection Verified" Notification
+
+Subtask 1: Add link/connection icon (gray circle background)
+Subtask 2: Add title "SharePoint Connection Verified" (white, font-size: 16-18px, bold)
+Subtask 3: Add description: "Successfully connected to PMO SharePoint folder. 156 documents indexed."
+Subtask 4: No action buttons needed
+Subtask 5: Add timestamp "2d ago" (top-right, gray, 13px)
+Subtask 6: No border highlight
+
+Task 4.1.11: Implement Notification Actions
+
+Subtask 1: Create click handlers for all action buttons
+Subtask 2: Implement dismiss functionality
+Subtask 3: Implement mark as read functionality
+Subtask 4: Add snooze functionality
+Subtask 5: Implement navigation to linked content (emails, assessments)
+Subtask 6: Update unread count when actions taken
+
+Task 4.1.12: Add Scrolling and Responsive Behavior
+
+Subtask 1: Make notifications list scrollable
+Subtask 2: Test with many notifications
+Subtask 3: Ensure modal responsive on different screen sizes
+Subtask 4: Test all interactions
+
+
+Epic 5: Dashboard Bottom Panel (Active Workstreams & Quick Actions)
+User Story 5.1: Implement Active Workstreams & Context Display
+As a Data Quality Manager
+I want a comprehensive bottom panel showing active workstreams, AI context, and quick actions
+So that I can quickly access my current work and take common actions
+Acceptance Criteria:
+
+Bottom panel displays on dashboard
+"Notifications & Updates" section shows:
+
+Section title with bell icon
+"5 New" badge (top-right)
+Three notification preview cards
+"View All Notifications" link at bottom
+
+
+"Active Workstreams" section shows:
+
+Section title with target icon
+Three workstream cards in horizontal layout
+Each card shows: title, description, progress bar, due date, tasks remaining, status badge
+
+
+"AI Agent Context" section shows:
+
+Section title with agent icon
+Current workstream info
+Current task info
+Last interaction timestamp
+"Continue Working" button
+
+
+"Quick Actions" section shows:
+
+Section title with lightning icon
+Four action buttons in 2x2 grid
+Each button with icon and label
+
+
+
+Main Flow:
+
+User scrolls to bottom of dashboard
+User sees all four sections
+User can view notification previews
+User can click notifications to view full center
+User can see active workstream status
+User can see current AI context
+User can continue working from context
+User can access quick actions
+
+Alternative Flow:
+
+If no active workstreams, show empty state
+If no AI context, show prompt to start
+If notifications empty, hide preview section
+
+Tasks and Subtasks:
+Task 5.1.1: Create Bottom Panel Container
+
+Subtask 1: Design panel below main dashboard content
+Subtask 2: Create dark theme background (#1e1e1e or slightly lighter)
+Subtask 3: Set proper width (full width with padding)
+Subtask 4: Add top border or shadow for separation
+Subtask 5: Implement proper padding (32-40px)
+
+Task 5.1.2: Build Notifications & Updates Section
+
+Subtask 1: Create section container (top-left quadrant)
+Subtask 2: Add section header with bell icon (white/blue)
+Subtask 3: Add "Notifications & Updates" title
+Subtask 4: Add "5 New" badge (top-right, red background)
+Subtask 5: Create three compact notification cards:
+
+Card 1: "PMO Review Request" (email icon, "2h ago")
+Card 2: "Assessment Due Tomorrow" (chart icon, "5h ago")
+Card 3: "Training Session Completed" (checkmark icon, "1d ago")
+
+
+Subtask 6: Style notification cards:
+
+Slightly lighter background than panel
+Small icon (left)
+Title and truncated description
+Timestamp (right)
+Hover effect
+Compact spacing (8-12px between cards)
+
+
+Subtask 7: Add "View All Notifications" link at bottom (centered, underlined)
+
+Task 5.1.3: Build Active Workstreams Section
+
+Subtask 1: Create section container (center/main area)
+Subtask 2: Add section header with target/circle icon
+Subtask 3: Add "Active Workstreams" title
+Subtask 4: Create horizontal card layout (three cards in row)
+Subtask 5: Build "DQ Assessment - PMO" card:
+
+Status badge: "Active" (white with dot)
+Title: "DQ Assessment - PMO"
+Description: "Quarterly data quality review for Project Management Office"
+Progress bar: 65% (white/light color)
+Due date: "Due: Oct 15"
+Tasks remaining: "12 tasks left"
+
+
+Subtask 6: Build "DQ Training - Finance" card:
+
+Status badge: "In Progress" (red/pink)
+Title: "DQ Training - Finance"
+Description: "Training materials and session planning for finance team"
+Progress bar: 40% (red/pink color)
+Due date: "Due: Oct 22"
+Tasks remaining: "8 tasks left"
+
+
+Subtask 7: Build "Strategy Refinement" card:
+
+Status badge: "Planning" (purple/blue)
+Title: "Strategy Refinement"
+Description: "Q1 2026 data quality strategy development"
+Progress bar: 15% (purple/blue color)
+Due date: "Due: Nov 6"
+Tasks remaining: "20 tasks left"
+
+
+Subtask 8: Style workstream cards:
+
+Dark background (#2a2a2a)
+Rounded corners (8-12px)
+Proper padding (16-20px)
+Equal width (flex: 1)
+Gap between cards (16-20px)
+Icon/visual element matching card theme
+Hover effect (slight brightness increase)
+
+
+Subtask 9: Implement progress bars with proper colors
+
+Task 5.1.4: Build AI Agent Context Section
+
+Subtask 1: Create section container (right side, above quick actions)
+Subtask 2: Add section header with agent/robot icon
+Subtask 3: Add "AI Agent Context" title
+Subtask 4: Create context information display:
+
+Label "Active Workstream:" with value "DQ Assessment - PMO"
+Label "Current Task:" with value "Section 3 Draft"
+Label "Last Interaction:" with value "15 min ago"
+
+
+Subtask 5: Style context info:
+
+Two-column layout (label left, value right)
+Gray labels, white values
+Proper spacing (12-16px between rows)
+Monospace or clear font for values
+
+
+Subtask 6: Add "Continue Working" button at bottom:
+
+Full width of section
+Blue/purple gradient or solid color
+White text
+Hover effect
+Proper padding (12-16px)
+
+
+
+Task 5.1.5: Build Quick Actions Section
+
+Subtask 1: Create section container (right side, below AI context)
+Subtask 2: Add section header with lightning bolt icon
+Subtask 3: Add "Quick Actions" title
+Subtask 4: Create 2x2 button grid
+Subtask 5: Add four action buttons:
+
+"New Assessment" (document icon)
+"Agent Send" (send icon)
+"Connect KB" (connection icon)
+"Manage Tools" (tool/settings icon)
+
+
+Subtask 6: Style action buttons:
+
+Dark background (#2a2a2a)
+White text and icon
+Icon above label or icon left
+Equal size
+Rounded corners
+Grid gap (12-16px)
+Hover effect
+
+
+
+Task 5.1.6: Implement Panel Functionality
+
+Subtask 1: Add click handlers for notification previews
+Subtask 2: Link "View All Notifications" to full notifications center
+Subtask 3: Add click handlers for workstream cards (navigate to detail)
+Subtask 4: Implement "Continue Working" button (open AI chat with context)
+Subtask 5: Add click handlers for quick action buttons
+Subtask 6: Ensure proper navigation and state management
+
+Task 5.1.7: Add Responsive Behavior
+
+Subtask 1: Test layout on different screen sizes
+Subtask 2: Stack sections vertically on smaller screens
+Subtask 3: Adjust card layouts for mobile
+Subtask 4: Ensure all elements remain accessible
+
+
+Summary of Major Missing Components:
+
+Dashboard Main View: Complete notifications panel (left side) and upcoming assessments panel (right side) are entirely missing from implementation
+Profile Settings Page: The comprehensive profile page with statistics cards and account details is not present in current implementation
+AI Agent Chat Interface: The detailed chat interface with context awareness, section display, and suggested actions is missing
+Notifications Center Modal: Full-featured notifications center with filtering and detailed notification cards is not implemented
+Bottom Dashboard Panel: Active workstreams display, AI agent context section, and quick actions panel are absent
+
+All these components need to be built from scratch to match the design specifications
