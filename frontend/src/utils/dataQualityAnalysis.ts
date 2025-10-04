@@ -67,16 +67,21 @@ const analyzeCompleteness = (data: string[][]): QualityDimension => {
   let totalCells = 0;
   let filledCells = 0;
   const emptyColumns: string[] = [];
+  const missingCellsByRow = new Map<number, string[]>();
 
   if (headers) headers.forEach((header, colIndex) => {
     let columnEmpty = 0;
-    rows.forEach(row => {
+    rows.forEach((row, rowIndex) => {
       totalCells++;
       const value = row[colIndex]?.trim() || '';
       if (value && value !== 'null' && value !== 'NA' && value !== 'N/A') {
         filledCells++;
       } else {
         columnEmpty++;
+        if (!missingCellsByRow.has(rowIndex)) {
+          missingCellsByRow.set(rowIndex, []);
+        }
+        missingCellsByRow.get(rowIndex)?.push(header);
       }
     });
 
@@ -98,6 +103,20 @@ const analyzeCompleteness = (data: string[][]): QualityDimension => {
   if (missingRate > 10) {
     issues.push(`${missingRate.toFixed(1)}% of cells are empty`);
     recommendations.push('Implement validation rules at data entry points');
+  }
+
+  if (missingCellsByRow.size > 0) {
+    const sortedMissingRows = Array.from(missingCellsByRow.entries())
+      .sort((a, b) => b[1].length - a[1].length)
+      .slice(0, 5);
+    
+    sortedMissingRows.forEach(([rowIndex, columns]) => {
+      issues.push(`Row ${rowIndex + 2} missing: ${columns.join(', ')}`);
+    });
+
+    if (missingCellsByRow.size > 5) {
+      issues.push(`... and ${missingCellsByRow.size - 5} more rows with missing values`);
+    }
   }
 
   if (completenessRate === 100) {
@@ -192,53 +211,108 @@ const analyzeValidity = (data: string[][]): QualityDimension => {
   let passedValidations = 0;
 
   if (headers) headers.forEach((header, colIndex) => {
-    const values = rows.map(row => row[colIndex]?.trim() || '').filter(v => v);
     const headerLower = header.toLowerCase();
 
     if (headerLower.includes('email')) {
-      values.forEach(value => {
-        totalValidations++;
-        if (value.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/)) {
-          passedValidations++;
+      rows.forEach((row, rowIndex) => {
+        const value = row[colIndex]?.trim() || '';
+        if (value) {
+          totalValidations++;
+          if (value.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/)) {
+            passedValidations++;
+          } else {
+            if (issues.length < 10) {
+              issues.push(`Row ${rowIndex + 2}, ${header}: Invalid email format`);
+            }
+          }
         }
       });
-      const emailValidRate = (passedValidations / Math.max(totalValidations, 1)) * 100;
-      if (emailValidRate < 100) {
-        issues.push(`${header}: ${(100 - emailValidRate).toFixed(1)}% invalid email formats`);
-        recommendations.push(`Validate email format at entry for "${header}"`);
-      }
+      recommendations.push(`Validate email format at entry for "${header}"`);
     }
 
     if (headerLower.includes('date')) {
-      values.forEach(value => {
-        totalValidations++;
-        if (value.match(/^\d{4}-\d{2}-\d{2}/) || value.match(/^\d{1,2}\/\d{1,2}\/\d{2,4}/)) {
-          passedValidations++;
+      rows.forEach((row) => {
+        const value = row[colIndex]?.trim() || '';
+        if (value) {
+          totalValidations++;
+          if (value.match(/^\d{4}-\d{2}-\d{2}/) || value.match(/^\d{1,2}\/\d{1,2}\/\d{2,4}/)) {
+            passedValidations++;
+          }
         }
       });
     }
 
     if (headerLower.includes('phone')) {
-      values.forEach(value => {
-        totalValidations++;
-        const cleaned = value.replace(/[\s\-\(\)]/g, '');
-        if (cleaned.match(/^\+?\d{10,15}$/)) {
-          passedValidations++;
+      rows.forEach((row, rowIndex) => {
+        const value = row[colIndex]?.trim() || '';
+        if (value) {
+          totalValidations++;
+          const cleaned = value.replace(/[\s\-\(\)]/g, '');
+          if (cleaned.match(/^\+?\d{10,15}$/)) {
+            passedValidations++;
+          } else {
+            if (issues.length < 10) {
+              issues.push(`Row ${rowIndex + 2}, ${header}: Invalid phone format`);
+            }
+          }
         }
       });
-      const phoneValidRate = (passedValidations / Math.max(totalValidations, 1)) * 100;
-      if (phoneValidRate < 100) {
-        issues.push(`${header}: Invalid phone number formats detected`);
-        recommendations.push(`Standardize phone number format for "${header}"`);
-      }
+      recommendations.push(`Standardize phone number format for "${header}"`);
     }
 
-    if (headerLower.includes('age') || headerLower.includes('quantity') || headerLower.includes('amount')) {
-      values.forEach(value => {
-        totalValidations++;
-        const num = Number(value);
-        if (!isNaN(num) && num >= 0) {
-          passedValidations++;
+    if (headerLower.includes('age')) {
+      rows.forEach((row, rowIndex) => {
+        const value = row[colIndex]?.trim() || '';
+        if (value) {
+          totalValidations++;
+          const age = Number(value);
+          if (!isNaN(age)) {
+            if (age < 0) {
+              issues.push(`Row ${rowIndex + 2}: Age ${age} is negative (range violation)`);
+            } else if (age > 120) {
+              issues.push(`Row ${rowIndex + 2}: Age ${age} exceeds biological limit (range violation)`);
+            } else {
+              passedValidations++;
+            }
+          }
+        }
+      });
+      recommendations.push(`Enforce valid age range for "${header}"`);
+    }
+
+    if (headerLower.includes('salary') || headerLower.includes('price') || 
+        headerLower.includes('amount') || headerLower.includes('cost')) {
+      rows.forEach((row, rowIndex) => {
+        const value = row[colIndex]?.trim().replace(/[$,]/g, '') || '';
+        if (value) {
+          totalValidations++;
+          const num = Number(value);
+          if (!isNaN(num)) {
+            if (num < 0) {
+              issues.push(`Row ${rowIndex + 2}: ${header} ${num} is negative (range violation)`);
+            } else {
+              passedValidations++;
+            }
+          }
+        }
+      });
+      recommendations.push(`Ensure ${header} values are non-negative`);
+    }
+
+    if (headerLower.includes('count') || headerLower.includes('quantity') || 
+        headerLower.includes('number') || headerLower.includes('total')) {
+      rows.forEach((row, rowIndex) => {
+        const value = row[colIndex]?.trim() || '';
+        if (value) {
+          totalValidations++;
+          const num = Number(value);
+          if (!isNaN(num)) {
+            if (num < 0) {
+              issues.push(`Row ${rowIndex + 2}: ${header} ${num} is negative (range violation)`);
+            } else {
+              passedValidations++;
+            }
+          }
         }
       });
     }
@@ -249,7 +323,7 @@ const analyzeValidity = (data: string[][]): QualityDimension => {
   }
 
   if (issues.length === 0) {
-    recommendations.push('All validated fields meet expected formats');
+    recommendations.push('All validated fields meet expected formats and ranges');
   }
 
   return {
@@ -261,107 +335,6 @@ const analyzeValidity = (data: string[][]): QualityDimension => {
   };
 };
 
-interface BusinessRuleViolation {
-  column: string;
-  value: number;
-  issue: string;
-}
-
-const checkBusinessRules = (data: string[][], headers: string[]): BusinessRuleViolation[] => {
-  const violations: BusinessRuleViolation[] = [];
-  const rows = data.slice(1);
-
-  headers.forEach((header, colIndex) => {
-    const headerLower = header.toLowerCase();
-    
-    if (headerLower.includes('age')) {
-      rows.forEach((row, rowIndex) => {
-        const val = row[colIndex]?.trim() || '';
-        const age = Number(val);
-        if (!isNaN(age)) {
-          if (age < 0) {
-            violations.push({
-              column: header,
-              value: age,
-              issue: `Row ${rowIndex + 2}: Age ${age} is negative (impossible)`
-            });
-          } else if (age < 16) {
-            violations.push({
-              column: header,
-              value: age,
-              issue: `Row ${rowIndex + 2}: Age ${age} is below minimum expected value (< 16)`
-            });
-          } else if (age > 100) {
-            violations.push({
-              column: header,
-              value: age,
-              issue: `Row ${rowIndex + 2}: Age ${age} exceeds biological limits (> 100)`
-            });
-          }
-        }
-      });
-    }
-    
-    if (headerLower.includes('salary') || headerLower.includes('price') || 
-        headerLower.includes('amount') || headerLower.includes('cost')) {
-      const values = rows.map((row, rowIndex) => {
-        const val = row[colIndex]?.trim().replace(/[$,]/g, '') || '';
-        const num = Number(val);
-        return !isNaN(num) ? { value: num, rowIndex } : null;
-      }).filter((v): v is { value: number; rowIndex: number } => v !== null);
-
-      if (values.length > 0) {
-        values.forEach(({ value, rowIndex }) => {
-          if (value < 0) {
-            violations.push({
-              column: header,
-              value: value,
-              issue: `Row ${rowIndex + 2}: ${header} ${value} is negative (invalid for financial data)`
-            });
-          }
-        });
-
-        const sortedValues = values.map(v => v.value).sort((a, b) => a - b);
-        const medianVal1 = sortedValues[sortedValues.length / 2 - 1];
-        const medianVal2 = sortedValues[sortedValues.length / 2];
-        const medianSingle = sortedValues[Math.floor(sortedValues.length / 2)];
-        const median = sortedValues.length % 2 === 0 && medianVal1 !== undefined && medianVal2 !== undefined
-          ? (medianVal1 + medianVal2) / 2
-          : medianSingle;
-
-        if (median !== undefined) {
-          values.forEach(({ value, rowIndex }) => {
-            if (value > median * 3 && median > 0) {
-              violations.push({
-                column: header,
-                value: value,
-                issue: `Row ${rowIndex + 2}: ${header} $${value.toLocaleString()} is an extreme outlier (>3x median of $${median.toLocaleString()})`
-              });
-            }
-          });
-        }
-      }
-    }
-    
-    if (headerLower.includes('count') || headerLower.includes('quantity') || 
-        headerLower.includes('number') || headerLower.includes('total')) {
-      rows.forEach((row, rowIndex) => {
-        const val = row[colIndex]?.trim() || '';
-        const num = Number(val);
-        if (!isNaN(num) && num < 0) {
-          violations.push({
-            column: header,
-            value: num,
-            issue: `Row ${rowIndex + 2}: ${header} ${num} is negative (should be positive)`
-          });
-        }
-      });
-    }
-  });
-
-  return violations;
-};
-
 const analyzeAccuracy = (data: string[][]): QualityDimension => {
   if (data.length < 2) {
     return {
@@ -369,43 +342,14 @@ const analyzeAccuracy = (data: string[][]): QualityDimension => {
       score: 0,
       status: 'poor',
       issues: ['Insufficient data for accuracy assessment'],
-      recommendations: ['Accuracy requires reference data or business rules']
+      recommendations: ['Accuracy assessment uses statistical analysis to detect outliers']
     };
   }
 
-  const headers = data[0];
   const rows = data.slice(1);
   const issues: string[] = [];
   const recommendations: string[] = [];
   let accuracyScore = 95;
-
-  if (headers) {
-    const businessRuleViolations = checkBusinessRules(data, headers);
-    
-    if (businessRuleViolations.length > 0) {
-      const violationsByColumn = new Map<string, BusinessRuleViolation[]>();
-      businessRuleViolations.forEach(violation => {
-        if (!violationsByColumn.has(violation.column)) {
-          violationsByColumn.set(violation.column, []);
-        }
-        violationsByColumn.get(violation.column)?.push(violation);
-      });
-
-      const totalRows = rows.length;
-      const violationRate = (businessRuleViolations.length / totalRows) * 100;
-      accuracyScore -= Math.min(35, violationRate * 2);
-
-      violationsByColumn.forEach((violations, column) => {
-        violations.slice(0, 3).forEach(v => {
-          issues.push(v.issue);
-        });
-        if (violations.length > 3) {
-          issues.push(`... and ${violations.length - 3} more violations in ${column}`);
-        }
-        recommendations.push(`Review and correct invalid values in "${column}"`);
-      });
-    }
-  }
 
   let outlierCount = 0;
   let totalNumericValues = 0;
@@ -414,8 +358,11 @@ const analyzeAccuracy = (data: string[][]): QualityDimension => {
   if (data[0]) data[0].forEach((header, colIndex) => {
     const values = rows.map((row, rowIndex) => {
       const val = row[colIndex]?.trim().replace(/[$,]/g, '') || '';
+      if (!val || val === 'null' || val === 'NA' || val === 'N/A') {
+        return null;
+      }
       const num = Number(val);
-      return !isNaN(num) ? { value: num, rowIndex } : null;
+      return !isNaN(num) && num !== 0 ? { value: num, rowIndex } : null;
     }).filter((v): v is { value: number; rowIndex: number } => v !== null);
 
     if (values.length > 3) {
@@ -444,7 +391,12 @@ const analyzeAccuracy = (data: string[][]): QualityDimension => {
           if (outlierDetails.length < 5) {
             const method = isZScoreOutlier && isIQROutlier ? 'z-score & IQR' : 
                           isZScoreOutlier ? 'z-score' : 'IQR';
-            outlierDetails.push(`Row ${rowIndex + 2}, ${header}: ${value} (${method} outlier)`);
+            const formattedValue = header.toLowerCase().includes('salary') || 
+                                   header.toLowerCase().includes('amount') || 
+                                   header.toLowerCase().includes('price') 
+                                   ? `$${value.toLocaleString()}` 
+                                   : value.toString();
+            outlierDetails.push(`Row ${rowIndex + 2}, ${header}: ${formattedValue} (statistical ${method} outlier)`);
           }
         }
       });
@@ -458,17 +410,15 @@ const analyzeAccuracy = (data: string[][]): QualityDimension => {
       issues.push(`${outlierCount} statistical outliers detected (${outlierRate.toFixed(1)}% of numeric data)`);
       outlierDetails.forEach(detail => issues.push(detail));
       recommendations.push('Review outliers for data entry errors or legitimate edge cases');
+      recommendations.push('Statistical outliers may indicate unusual but valid data - verify with domain experts');
     }
   }
 
   accuracyScore = Math.max(0, Math.round(accuracyScore));
 
   if (issues.length === 0) {
-    issues.push('No accuracy issues detected based on business rules and statistical analysis');
-    recommendations.push('Continue monitoring data quality with established validation rules');
-  } else {
-    recommendations.push('Implement data validation at entry points to prevent invalid values');
-    recommendations.push('Consider establishing automated business rule checks');
+    issues.push('No statistical outliers detected - data appears accurate');
+    recommendations.push('Continue monitoring data quality with statistical analysis');
   }
 
   return {
