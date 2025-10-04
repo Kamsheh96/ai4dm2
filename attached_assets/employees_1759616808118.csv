@@ -1,0 +1,21 @@
+employee_id,name,email,department,salary,hire_date,age,phone,status
+E001,John Smith,john.smith@company.com,Engineering,75000,2020-01-15,28,555-0101,Active
+E002,Sarah Johnson,sarah.j@company.com,Marketing,65000,2019-03-22,32,555-0102,Active
+E003,Mike Wilson,,Sales,85000,2021-07-10,45,555-0103,Active
+E004,Emily Brown,emily.brown@company.com,Engineering,,2018-11-30,29,555-0104,Active
+E005,David Lee,david.lee@company.com,HR,55000,invalid-date,35,555-0105,Active
+E006,Lisa Garcia,lisa.garcia@company.com,Marketing,68000,2020-05-18,150,555-0106,Active
+E007,James Miller,james.miller@company.com,Sales,92000,2017-09-08,41,555-0107,Active
+E001,John Smith,john.smith@company.com,Engineering,75000,2020-01-15,28,555-0101,Active
+E009,,mark.taylor@company.com,Engineering,71000,2021-02-14,30,,Active
+E010,Rachel White,rachel.white@company.com,Marketing,63000,2022-06-25,27,555-0110,Inactive
+E011,Tom Anderson,tom.anderson@invalid,Sales,88000,2019-12-05,38,555-0111,Active
+E012,Jennifer Davis,jennifer.davis@company.com,HR,57000,2020-08-20,33,555-0112,Active
+E013,Robert Martinez,robert.m@company.com,Engineering,250000,2018-04-12,44,555-0113,Active
+E014,Amanda Taylor,,Marketing,66000,2021-10-30,31,555-0114,Active
+E015,Christopher Lee,chris.lee@company.com,Sales,,2017-07-19,39,555-0115,
+E016,Michelle Brown,michelle.brown@company.com,Engineering,74000,2022-01-08,-5,555-0116,Active
+E017,Daniel Wilson,daniel.wilson@company.com,HR,56000,2020-11-15,36,123-ABCD,Active
+E018,Karen Garcia,karen.garcia@company.com,Marketing,67000,2019-08-22,28,555-0118,Active
+E019,Paul Smith,paul.smith@company.com,Sales,89000,2021-05-10,42,555-0119,Active
+E020,Laura Johnson,laura.j@company.com,Engineering,76000,2018-12-03,30,555-0120,Active
