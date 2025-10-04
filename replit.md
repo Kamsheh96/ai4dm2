@@ -42,7 +42,7 @@ frontend/
 
 ## Recent Changes
 
-### October 4, 2025 - Data Quality Assessment Feature
+### October 4, 2025 - Data Quality Assessment Feature & Categorization Fix
 1. Implemented Data Quality Assessment Agent (Priority 2.1)
 2. Created quality analysis engine (`frontend/src/utils/dataQualityAnalysis.ts`)
    - Analyzes 5 quality dimensions: completeness, consistency, validity, accuracy, uniqueness
@@ -57,6 +57,12 @@ frontend/
    - Added to Analytics category
    - Works with CSV file uploads
    - Results display in chat interface
+5. Fixed dimension categorization to follow data quality standards:
+   - **Validity**: Range violations (age < 0, age > 120, negative amounts) and format errors
+   - **Accuracy**: Statistical outliers only (z-score, IQR methods)
+   - **Completeness**: Missing values with explicit row/column listings
+   - Fixed validity scoring bug (prevented negative scores)
+6. Fixed deployment configuration from static to autoscale to resolve MIME type errors
 
 ### October 3, 2025 - Initial Replit Setup
 
