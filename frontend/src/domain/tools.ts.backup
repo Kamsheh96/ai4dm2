@@ -93,7 +93,7 @@ export const DATA_TOOLS: DataTool[] = [
       ],
       alternatives: ['OneTrust', 'TrustArc', 'Enzuzo'],
       integrations: ['Salesforce', 'Microsoft 365', 'AWS', 'Google Cloud']
-    }
+    },
   },
   {
     id: 'multi-db-orchestrator',
@@ -133,7 +133,7 @@ export const DATA_TOOLS: DataTool[] = [
       ],
       alternatives: ['Presto', 'Apache Drill', 'Denodo'],
       integrations: ['PostgreSQL', 'MongoDB', 'MySQL', 'Oracle', 'Snowflake', 'BigQuery']
-    }
+    },
   },
   {
     id: 'privacy-analyzer',
@@ -353,7 +353,7 @@ export const DATA_TOOLS: DataTool[] = [
       ],
       alternatives: ['Manual MDMO compliance tracking', 'Custom governance frameworks'],
       integrations: ['Government data portals', 'Ministry databases', 'National data repositories', 'SharePoint']
-    }
+    },
   },
   {
     id: 'pdpl-assessor',
@@ -395,7 +395,7 @@ export const DATA_TOOLS: DataTool[] = [
       ],
       alternatives: ['OneTrust Privacy', 'TrustArc', 'Manual compliance audits'],
       integrations: ['CRM systems', 'HR databases', 'Customer databases', 'Marketing platforms', 'Cloud storage']
-    }
+    },
   },
   {
     id: 'regulatory-intelligence',
@@ -435,51 +435,8 @@ export const DATA_TOOLS: DataTool[] = [
       ],
       alternatives: ['Thomson Reuters Regulatory Intelligence', 'LexisNexis', 'Manual regulatory tracking'],
       integrations: ['Compliance management systems', 'Legal databases', 'Policy management platforms']
-    }
-  },
-
-  {
-    id: 'data-quality-assessor',
-    name: 'Data Quality Assessment Agent',
-    description: 'Multi-dimensional data quality analysis and profiling',
-    category: 'analytics',
-    isActive: false,
-    complexity: 'intermediate',
-    estimatedTime: '5-10 min',
-    icon: '🔍',
-    metrics: {
-      speed: 4,
-      quality: 5,
-      cost: 'low',
-      reliability: 5,
-      scalability: 4
     },
-    details: {
-      fullDescription: 'Comprehensive data quality assessment tool that analyzes datasets across five critical dimensions: completeness, consistency, validity, accuracy, and uniqueness. Provides actionable insights and recommendations to improve data quality for better decision-making.',
-      keyFeatures: [
-        'Multi-dimensional quality analysis (completeness, consistency, validity, accuracy, uniqueness)',
-        'Automated data profiling and statistics',
-        'Visual quality score dashboard with drill-down capabilities',
-        'Actionable recommendations for data quality improvement',
-        'Support for CSV and Excel file formats',
-        'Pattern recognition for data anomalies'
-      ],
-      useCases: [
-        'Data migration quality validation',
-        'Ongoing data quality monitoring',
-        'Pre-analysis data assessment',
-        'Data governance reporting',
-        'Data quality improvement initiatives'
-      ],
-      limitations: [
-        'File size limit of 10MB for optimal performance',
-        'Accuracy dimension requires reference data for full assessment',
-        'Limited to tabular data formats'
-      ],
-      alternatives: ['Informatica Data Quality', 'Talend Data Quality', 'Great Expectations'],
-      integrations: ['Excel', 'CSV files', 'Database exports', 'Data warehouses']
-    }
-  }
+  },
 ];
 
 export const TOOL_CATEGORIES: Record<ToolCategory, { name: string; color: string }> = {

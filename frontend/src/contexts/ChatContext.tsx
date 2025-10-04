@@ -6,7 +6,7 @@ interface ChatContextValue {
   messages: ChatMessage[];
   isProcessing: boolean;
   currentWorkstream: string | null;
-  addMessage: (content: string, type: ChatMessage['type'], tools?: string[], files?: string[]) => void;
+  addMessage: (content: string, type: ChatMessage['type'], tools?: string[], files?: string[]) => string;
   setProcessing: (processing: boolean) => void;
   clearMessages: () => void;
   setCurrentWorkstream: (workstreamId: string | null) => void;
@@ -76,7 +76,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     type: ChatMessage['type'],
     tools?: string[],
     files?: string[]
-  ): void => {
+  ): string => {
     const newMessage: ChatMessage = {
       id: `msg-${Date.now()}-${Math.random()}`,
       type,
@@ -87,6 +87,7 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     };
 
     setMessages(prev => [...prev, newMessage]);
+    return newMessage.id;
   }, []);
 
   const setProcessing = useCallback((processing: boolean): void => {
