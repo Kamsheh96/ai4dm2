@@ -261,6 +261,107 @@ const analyzeValidity = (data: string[][]): QualityDimension => {
   };
 };
 
+interface BusinessRuleViolation {
+  column: string;
+  value: number;
+  issue: string;
+}
+
+const checkBusinessRules = (data: string[][], headers: string[]): BusinessRuleViolation[] => {
+  const violations: BusinessRuleViolation[] = [];
+  const rows = data.slice(1);
+
+  headers.forEach((header, colIndex) => {
+    const headerLower = header.toLowerCase();
+    
+    if (headerLower.includes('age')) {
+      rows.forEach((row, rowIndex) => {
+        const val = row[colIndex]?.trim() || '';
+        const age = Number(val);
+        if (!isNaN(age)) {
+          if (age < 0) {
+            violations.push({
+              column: header,
+              value: age,
+              issue: `Row ${rowIndex + 2}: Age ${age} is negative (impossible)`
+            });
+          } else if (age < 16) {
+            violations.push({
+              column: header,
+              value: age,
+              issue: `Row ${rowIndex + 2}: Age ${age} is below minimum expected value (< 16)`
+            });
+          } else if (age > 100) {
+            violations.push({
+              column: header,
+              value: age,
+              issue: `Row ${rowIndex + 2}: Age ${age} exceeds biological limits (> 100)`
+            });
+          }
+        }
+      });
+    }
+    
+    if (headerLower.includes('salary') || headerLower.includes('price') || 
+        headerLower.includes('amount') || headerLower.includes('cost')) {
+      const values = rows.map((row, rowIndex) => {
+        const val = row[colIndex]?.trim().replace(/[$,]/g, '') || '';
+        const num = Number(val);
+        return !isNaN(num) ? { value: num, rowIndex } : null;
+      }).filter((v): v is { value: number; rowIndex: number } => v !== null);
+
+      if (values.length > 0) {
+        values.forEach(({ value, rowIndex }) => {
+          if (value < 0) {
+            violations.push({
+              column: header,
+              value: value,
+              issue: `Row ${rowIndex + 2}: ${header} ${value} is negative (invalid for financial data)`
+            });
+          }
+        });
+
+        const sortedValues = values.map(v => v.value).sort((a, b) => a - b);
+        const medianVal1 = sortedValues[sortedValues.length / 2 - 1];
+        const medianVal2 = sortedValues[sortedValues.length / 2];
+        const medianSingle = sortedValues[Math.floor(sortedValues.length / 2)];
+        const median = sortedValues.length % 2 === 0 && medianVal1 !== undefined && medianVal2 !== undefined
+          ? (medianVal1 + medianVal2) / 2
+          : medianSingle;
+
+        if (median !== undefined) {
+          values.forEach(({ value, rowIndex }) => {
+            if (value > median * 3 && median > 0) {
+              violations.push({
+                column: header,
+                value: value,
+                issue: `Row ${rowIndex + 2}: ${header} $${value.toLocaleString()} is an extreme outlier (>3x median of $${median.toLocaleString()})`
+              });
+            }
+          });
+        }
+      }
+    }
+    
+    if (headerLower.includes('count') || headerLower.includes('quantity') || 
+        headerLower.includes('number') || headerLower.includes('total')) {
+      rows.forEach((row, rowIndex) => {
+        const val = row[colIndex]?.trim() || '';
+        const num = Number(val);
+        if (!isNaN(num) && num < 0) {
+          violations.push({
+            column: header,
+            value: num,
+            issue: `Row ${rowIndex + 2}: ${header} ${num} is negative (should be positive)`
+          });
+        }
+      });
+    }
+  });
+
+  return violations;
+};
+
 const analyzeAccuracy = (data: string[][]): QualityDimension => {
   if (data.length < 2) {
     return {
@@ -272,28 +373,79 @@ const analyzeAccuracy = (data: string[][]): QualityDimension => {
     };
   }
 
+  const headers = data[0];
   const rows = data.slice(1);
   const issues: string[] = [];
   const recommendations: string[] = [];
-  let accuracyScore = 85;
+  let accuracyScore = 95;
+
+  if (headers) {
+    const businessRuleViolations = checkBusinessRules(data, headers);
+    
+    if (businessRuleViolations.length > 0) {
+      const violationsByColumn = new Map<string, BusinessRuleViolation[]>();
+      businessRuleViolations.forEach(violation => {
+        if (!violationsByColumn.has(violation.column)) {
+          violationsByColumn.set(violation.column, []);
+        }
+        violationsByColumn.get(violation.column)?.push(violation);
+      });
+
+      const totalRows = rows.length;
+      const violationRate = (businessRuleViolations.length / totalRows) * 100;
+      accuracyScore -= Math.min(35, violationRate * 2);
+
+      violationsByColumn.forEach((violations, column) => {
+        violations.slice(0, 3).forEach(v => {
+          issues.push(v.issue);
+        });
+        if (violations.length > 3) {
+          issues.push(`... and ${violations.length - 3} more violations in ${column}`);
+        }
+        recommendations.push(`Review and correct invalid values in "${column}"`);
+      });
+    }
+  }
 
   let outlierCount = 0;
   let totalNumericValues = 0;
+  const outlierDetails: string[] = [];
 
-  if (data[0]) data[0].forEach((_header, colIndex) => {
-    const values = rows.map(row => {
-      const val = row[colIndex]?.trim() || '';
-      return !isNaN(Number(val)) ? Number(val) : null;
-    }).filter((v): v is number => v !== null);
+  if (data[0]) data[0].forEach((header, colIndex) => {
+    const values = rows.map((row, rowIndex) => {
+      const val = row[colIndex]?.trim().replace(/[$,]/g, '') || '';
+      const num = Number(val);
+      return !isNaN(num) ? { value: num, rowIndex } : null;
+    }).filter((v): v is { value: number; rowIndex: number } => v !== null);
 
-    if (values.length > 0) {
+    if (values.length > 3) {
       totalNumericValues += values.length;
-      const mean = values.reduce((a, b) => a + b, 0) / values.length;
-      const stdDev = Math.sqrt(values.reduce((sq, n) => sq + Math.pow(n - mean, 2), 0) / values.length);
+      const nums = values.map(v => v.value);
+      
+      const mean = nums.reduce((a, b) => a + b, 0) / nums.length;
+      const stdDev = Math.sqrt(nums.reduce((sq, n) => sq + Math.pow(n - mean, 2), 0) / nums.length);
 
-      values.forEach(val => {
-        if (Math.abs(val - mean) > 3 * stdDev) {
+      const sorted = [...nums].sort((a, b) => a - b);
+      const q1Index = Math.floor(sorted.length * 0.25);
+      const q3Index = Math.floor(sorted.length * 0.75);
+      const q1 = sorted[q1Index] ?? 0;
+      const q3 = sorted[q3Index] ?? 0;
+      const iqr = q3 - q1;
+      const lowerBound = q1 - 1.5 * iqr;
+      const upperBound = q3 + 1.5 * iqr;
+
+      values.forEach(({ value, rowIndex }) => {
+        const zScore = stdDev > 0 ? Math.abs(value - mean) / stdDev : 0;
+        const isZScoreOutlier = zScore > 3;
+        const isIQROutlier = value < lowerBound || value > upperBound;
+
+        if (isZScoreOutlier || isIQROutlier) {
           outlierCount++;
+          if (outlierDetails.length < 5) {
+            const method = isZScoreOutlier && isIQROutlier ? 'z-score & IQR' : 
+                          isZScoreOutlier ? 'z-score' : 'IQR';
+            outlierDetails.push(`Row ${rowIndex + 2}, ${header}: ${value} (${method} outlier)`);
+          }
         }
       });
     }
@@ -301,16 +453,23 @@ const analyzeAccuracy = (data: string[][]): QualityDimension => {
 
   if (outlierCount > 0 && totalNumericValues > 0) {
     const outlierRate = (outlierCount / totalNumericValues) * 100;
-    if (outlierRate > 5) {
-      accuracyScore -= 15;
+    if (outlierRate > 2) {
+      accuracyScore -= Math.min(20, outlierRate * 1.5);
       issues.push(`${outlierCount} statistical outliers detected (${outlierRate.toFixed(1)}% of numeric data)`);
+      outlierDetails.forEach(detail => issues.push(detail));
       recommendations.push('Review outliers for data entry errors or legitimate edge cases');
     }
   }
 
-  issues.push('Limited accuracy assessment without reference data');
-  recommendations.push('Implement data validation against authoritative sources');
-  recommendations.push('Consider establishing data quality rules based on business requirements');
+  accuracyScore = Math.max(0, Math.round(accuracyScore));
+
+  if (issues.length === 0) {
+    issues.push('No accuracy issues detected based on business rules and statistical analysis');
+    recommendations.push('Continue monitoring data quality with established validation rules');
+  } else {
+    recommendations.push('Implement data validation at entry points to prevent invalid values');
+    recommendations.push('Consider establishing automated business rule checks');
+  }
 
   return {
     name: 'Accuracy',
