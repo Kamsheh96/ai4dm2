@@ -9,6 +9,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5000,
     strictPort: true,
+    allowedHosts: ['810ec0cb-8d13-4fea-9348-df901a701569-00-3aioqlawe5yb.sisko.replit.dev'],
     hmr: {
       clientPort: 5000
     }
